@@ -1,0 +1,9 @@
+bin/
+obj/
+
+*.exe
+*.o
+*.depend
+*.layout
+
+.DS_Store
