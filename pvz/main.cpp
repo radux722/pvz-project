@@ -6,6 +6,7 @@ int main()
 {
     std::cout << "dziallaaa" << std::endl;
     std::cout << "dziallaaaaaaaaaaaaaaa" << std::endl;
+    std::cout << "jebac sfml" << std::endl;
     sf::RenderWindow window(sf::VideoMode(400, 400), "Test SFML 2.6.2 dzia³a!");
 
     sf::CircleShape shape(100.f);
