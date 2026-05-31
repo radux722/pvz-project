@@ -1,7 +1,11 @@
 #include "World.h"
+#include "BasicZombie.h"
+#include <algorithm>
 
-World::World()
+World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 {
+    bulletTimer = 0.f;
+    zombieSpawnTimer = 0.f;
     plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
     );
@@ -15,11 +19,18 @@ void World::update(float dt)
 {
 
     bulletTimer += dt;
+    zombieSpawnTimer += dt;
+
     if (bulletTimer >= 1.f)
     {
+        bullets.push_back(std::make_unique<Bullet>(180.f, 330.f));
         bulletTimer = 0.f;
+    }
 
-        bullets.push_back(std::make_unique<Bullet>(260.f, 330.f));
+    if (zombieSpawnTimer >= 3.f)
+    {
+        spawnZombie();
+        zombieSpawnTimer = 0.f;
     }
 
     for (auto& plant : plants)
@@ -54,6 +65,11 @@ void World::draw(sf::RenderWindow& window)
     {
         bullet->draw(window);
     }
+}
+
+void World::spawnZombie()
+{
+    zombies.push_back(std::make_unique<BasicZombie>(1100.f, 300.f));
 }
 
 void World::checkCollisions()

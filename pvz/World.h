@@ -22,13 +22,17 @@ private:
     std::vector<std::unique_ptr<Bullet>> bullets;
 
     float bulletTimer;
+    float zombieSpawnTimer;
 
     void checkCollisions();
+    void spawnZombie();
 
 public:
     World();
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
+    
+
 
 };
