@@ -14,18 +14,28 @@ void Zombie::attack()
 {
 }
 
-void Zombie::move()
+void Zombie::move(float dt)
 {
-    position.x -= 1.f;
+    position.x -= speed * dt;
     shape.setPosition(position);
 }
 
 void Zombie::update(float dt)
 {
-    move();
+    move(dt);
 }
 
 void Zombie::draw(sf::RenderWindow& window)
 {
     window.draw(shape);
+}
+
+sf::FloatRect Zombie::getBounds() const
+{
+    return shape.getGlobalBounds();
+}
+
+bool Zombie::isDead() const
+{
+    return health <= 0;
 }

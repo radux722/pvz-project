@@ -35,6 +35,8 @@ void World::update(float dt)
     {
         bullet->update(dt);
     }
+
+    checkCollisions();
 }
 
 void World::draw(sf::RenderWindow& window)
@@ -52,4 +54,46 @@ void World::draw(sf::RenderWindow& window)
     {
         bullet->draw(window);
     }
+}
+
+void World::checkCollisions()
+{
+    for (auto bulletIt = bullets.begin();
+        bulletIt != bullets.end();)
+    {
+        bool bulletDestroyed = false;
+
+        for (auto& zombie : zombies)
+        {
+            if ((*bulletIt)->getBounds().intersects(
+                zombie->getBounds()))
+            {
+                zombie->takeDamage(
+                    (*bulletIt)->getDamage()
+                );
+
+                bulletDestroyed = true;
+                break;
+            }
+        }
+
+        if (bulletDestroyed)
+        {
+            bulletIt = bullets.erase(bulletIt);
+        }
+        else
+        {
+            ++bulletIt;
+        }
+    }
+
+    zombies.erase(
+        std::remove_if(
+            zombies.begin(),
+            zombies.end(),
+            [](const auto& zombie)
+            {
+                return zombie->isDead();
+            }),
+        zombies.end());
 }

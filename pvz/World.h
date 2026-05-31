@@ -23,6 +23,8 @@ private:
 
     float bulletTimer;
 
+    void checkCollisions();
+
 public:
     World();
 

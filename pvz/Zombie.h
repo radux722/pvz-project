@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include <SFML/Graphics.hpp>
 
 class Zombie : public Entity
 {
@@ -15,8 +16,12 @@ public:
 
     virtual void attack();
 
-    void move();
+    void move(float dt);
 
     void update(float dt) override;
     void draw(sf::RenderWindow& window) override;
+
+    sf::FloatRect getBounds() const;
+    bool isDead() const;
+
 };
