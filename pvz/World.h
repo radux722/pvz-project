@@ -5,6 +5,7 @@
 
 #include "Plant.h"
 #include "Zombie.h"
+#include "Bullet.h"
 
 #include "Peashooter.h"
 #include "Sunflower.h"
@@ -18,10 +19,14 @@ class World
 private:
     std::vector<std::unique_ptr<Plant>> plants;
     std::vector<std::unique_ptr<Zombie>> zombies;
+    std::vector<std::unique_ptr<Bullet>> bullets;
+
+    float bulletTimer;
 
 public:
     World();
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
+
 };

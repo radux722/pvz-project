@@ -13,6 +13,15 @@ World::World()
 
 void World::update(float dt)
 {
+
+    bulletTimer += dt;
+    if (bulletTimer >= 1.f)
+    {
+        bulletTimer = 0.f;
+
+        bullets.push_back(std::make_unique<Bullet>(260.f, 330.f));
+    }
+
     for (auto& plant : plants)
     {
         plant->update(dt);
@@ -21,6 +30,10 @@ void World::update(float dt)
     for (auto& zombie : zombies)
     {
         zombie->update(dt);
+    }
+    for (auto& bullet : bullets)
+    {
+        bullet->update(dt);
     }
 }
 
@@ -34,5 +47,9 @@ void World::draw(sf::RenderWindow& window)
     for (auto& zombie : zombies)
     {
         zombie->draw(window);
+    }
+    for (auto& bullet : bullets)
+    {
+        bullet->draw(window);
     }
 }
