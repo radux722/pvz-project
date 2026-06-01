@@ -54,6 +54,8 @@ void World::update(float dt)
 
 void World::draw(sf::RenderWindow& window)
 {
+    grid.draw(window);
+
     for (auto& plant : plants)
     {
         plant->draw(window);
@@ -131,4 +133,14 @@ void World::addPeashooter(float x, float y)
 int World::getZombieKills() const
 {
     return zombieKills;
+}
+
+void World::placePeashooter(int row, int col)
+{
+    if (!grid.placePlant(row, col))
+        return;
+
+    sf::Vector2f pos = grid.getCellPosition(row, col);
+
+    plants.push_back(std::make_unique<Peashooter>(pos.x, pos.y));
 }

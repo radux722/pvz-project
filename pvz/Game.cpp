@@ -43,10 +43,14 @@ void Game::run()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    world.addPeashooter(
-                        static_cast<float>(event.mouseButton.x),
-                        static_cast<float>(event.mouseButton.y)
-                    );
+                    int mouseX = event.mouseButton.x;
+                    int mouseY = event.mouseButton.y;
+
+                    int row = (mouseY - 80) / 120;
+                    int col = mouseX / 120;
+
+                    world.placePeashooter(row, col);
+                   
                 }
             }
         }

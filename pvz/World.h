@@ -14,6 +14,8 @@
 #include "BasicZombie.h"
 #include "FastZombie.h"
 
+#include "Grid.h"
+
 class World
 {
 private:
@@ -30,12 +32,15 @@ private:
     void checkCollisions();
     void spawnZombie();
 
+    Grid grid;
+
 public:
     World();
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
     void addPeashooter(float x, float y);
+    void placePeashooter(int row, int col);
     
     int getZombieKills() const; // getter
 
