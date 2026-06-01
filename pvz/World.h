@@ -44,5 +44,6 @@ public:
     
     int getZombieKills() const; // getter
 
+    void placePlant(int row, int col, PlantType type);
 
 };

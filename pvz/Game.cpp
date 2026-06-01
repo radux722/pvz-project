@@ -8,7 +8,8 @@ Game::Game()
 
     // licznik smierci
     //font.loadFromFile("arial.ttf");
-    if (!font.loadFromFile("C:/Windows/Fonts/arial.ttf"))
+    //std::cout << std::filesystem::current_path() << std::endl;
+    if (!font.loadFromFile("C:/Users/rradu/Desktop/pvz-project/pvz/assets/fonts/comic.ttf"))
     {
         std::cout << "Blad ladowania czcionki!" << std::endl;
     }
@@ -20,6 +21,8 @@ Game::Game()
     killText.setCharacterSize(28);
     killText.setFillColor(sf::Color::White);
     killText.setPosition(20.f, 20.f);
+
+    selectedPlant = PlantType::Peashooter;
 }
 
 void Game::run()
@@ -49,9 +52,20 @@ void Game::run()
                     int row = (mouseY - 80) / 120;
                     int col = mouseX / 120;
 
-                    world.placePeashooter(row, col);
+                    world.placePlant(row, col, selectedPlant);
                    
                 }
+            }
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Num1)
+                    selectedPlant = PlantType::Peashooter;
+
+                if (event.key.code == sf::Keyboard::Num2)
+                    selectedPlant = PlantType::Sunflower;
+
+                if (event.key.code == sf::Keyboard::Num3)
+                    selectedPlant = PlantType::Wallnut;
             }
         }
 

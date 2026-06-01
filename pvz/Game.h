@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "World.h"
+#include "Plant.h"
 
 class Game
 {
@@ -12,6 +13,8 @@ private:
     sf::Text killText;
     World world;
 
+    PlantType selectedPlant;
+
 public:
     Game();
 
@@ -20,3 +23,4 @@ public:
     void update(float dt);
     void render();
 };
+

@@ -1,5 +1,8 @@
 #include "World.h"
 #include "BasicZombie.h"
+#include "Peashooter.h"
+#include "Sunflower.h"
+#include "Wallnut.h"
 #include <algorithm>
 
 World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
@@ -143,4 +146,48 @@ void World::placePeashooter(int row, int col)
     sf::Vector2f pos = grid.getCellPosition(row, col);
 
     plants.push_back(std::make_unique<Peashooter>(pos.x, pos.y));
+}
+
+void World::placePlant(int row, int col, PlantType type)
+{
+    if (!grid.placePlant(row, col))
+        return;
+
+    sf::Vector2f pos = grid.getCellPosition(row, col);
+
+    switch (type)
+    {
+    case PlantType::Peashooter:
+
+        plants.push_back(
+            std::make_unique<Peashooter>(
+                pos.x,
+                pos.y
+            )
+        );
+
+        break;
+
+    case PlantType::Sunflower:
+
+        plants.push_back(
+            std::make_unique<Sunflower>(
+                pos.x,
+                pos.y
+            )
+        );
+
+        break;
+
+    case PlantType::Wallnut:
+
+        plants.push_back(
+            std::make_unique<Wallnut>(
+                pos.x,
+                pos.y
+            )
+        );
+
+        break;
+    }
 }

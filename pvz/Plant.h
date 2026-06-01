@@ -1,6 +1,12 @@
 #pragma once
 
 #include "Entity.h"
+#include <SFML/Graphics.hpp>
+
+enum class PlantType
+{
+    Peashooter, Sunflower, Wallnut
+};
 
 class Plant : public Entity
 {
