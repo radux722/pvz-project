@@ -6,6 +6,8 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 {
     bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
+    zombieKills = 0; //inicjalizacjia 
+
     plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
     );
@@ -107,9 +109,26 @@ void World::checkCollisions()
         std::remove_if(
             zombies.begin(),
             zombies.end(),
-            [](const auto& zombie)
+            [this](const auto& zombie)
             {
-                return zombie->isDead();
+                if (zombie->isDead())
+                {
+                    zombieKills++;
+                    return true;
+                }
+                return false;
             }),
         zombies.end());
+
+
+}
+
+void World::addPeashooter(float x, float y)
+{
+    plants.push_back(std::make_unique<Peashooter>(x, y));
+}
+
+int World::getZombieKills() const
+{
+    return zombieKills;
 }

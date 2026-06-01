@@ -24,6 +24,9 @@ private:
     float bulletTimer;
     float zombieSpawnTimer;
 
+    int zombieKills;
+   
+
     void checkCollisions();
     void spawnZombie();
 
@@ -32,7 +35,9 @@ public:
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
+    void addPeashooter(float x, float y);
     
+    int getZombieKills() const; // getter
 
 
 };
