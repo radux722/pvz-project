@@ -24,7 +24,7 @@ Game::Game()
     sunText.setFont(font);
     sunText.setCharacterSize(28);
     sunText.setFillColor(sf::Color::Yellow);
-    sunText.setPostion(20.f, 60.f);
+    sunText.setPosition(20.f, 60.f);
 
     selectedPlant = PlantType::Peashooter;
 }

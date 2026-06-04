@@ -47,6 +47,16 @@ void World::update(float dt)
         plant->update(dt);
     }
 
+    for (auto& plant : plants)
+    {
+        Sunflower* sunflower = dynamic_cast<Sunflower*>(plant.get());
+
+        if (sunflower && sunflower->canProduceSun())
+        {
+            sunPoints += 25;
+        }
+    }
+
     for (auto& zombie : zombies)
     {
         bool blocked = false;
@@ -72,6 +82,7 @@ void World::update(float dt)
     {
         bullet->update(dt);
     }
+
 
     checkCollisions();
 

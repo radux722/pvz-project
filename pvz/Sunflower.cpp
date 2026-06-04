@@ -14,20 +14,7 @@ void Sunflower::attack()
 void Sunflower::update(float dt)
 {
     sunTimer += dt;
-    for (auto& plant : plants)
-    {
-        plant->update(dt);
-    }
-
-    for(auto& plant : plants)
-    {
-        Sunflower* sunflower = dynamic_cast<Sunflower*>(plant.get());
-
-        if(sunflower && sunflower->canProduceSun())
-        {
-            sunPoints += 25;
-        }
-    }
+    
 }
 
 bool Sunflower::canProduceSun()
