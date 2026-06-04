@@ -13,6 +13,7 @@ class Plant : public Entity
 protected:
     int cost;
     float attackSpeed;
+    int health;
 
     sf::RectangleShape shape;
 
@@ -23,4 +24,9 @@ public:
 
     void update(float dt) override;
     void draw(sf::RenderWindow& window) override;
+
+    sf::FloatRect getBounds() const;
+
+    void takeDamage(int damage);
+    bool isDead() const;
 };

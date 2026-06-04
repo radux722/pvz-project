@@ -1,9 +1,11 @@
 #include "Plant.h"
+#include <iostream>
 
 Plant::Plant(float x, float y)
     : Entity(x, y, 100),
     cost(50),
-    attackSpeed(1.f)
+    attackSpeed(1.f),
+    health(100)
 {
     shape.setSize(sf::Vector2f(60.f, 60.f));
     shape.setFillColor(sf::Color::Green);
@@ -17,4 +19,21 @@ void Plant::update(float dt)
 void Plant::draw(sf::RenderWindow& window)
 {
     window.draw(shape);
+}
+
+sf::FloatRect Plant::getBounds() const
+{
+    return shape.getGlobalBounds();
+}
+
+void Plant::takeDamage(int damage)
+{
+    health -= damage;
+
+    std::cout << "HP: " << health << std::endl;
+}
+
+bool Plant::isDead() const
+{
+    return health <= 0;
 }

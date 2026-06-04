@@ -11,13 +11,13 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     zombieSpawnTimer = 0.f;
     zombieKills = 0; //inicjalizacjia 
 
-    /*plants.push_back(
+    plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
     );
 
     zombies.push_back(
-        std::make_unique<BasicZombie>(1000.f, 300.f)
-    );*/
+        std::make_unique<BasicZombie>(1100.f, 300.f)
+    );
     // testowe 
 }
 
@@ -47,7 +47,24 @@ void World::update(float dt)
 
     for (auto& zombie : zombies)
     {
-        zombie->update(dt);
+        bool blocked = false;
+
+        for (auto& plant : plants)
+        {
+            if (zombie->getBounds().intersects(plant->getBounds()))
+            {
+                blocked = true;
+                if (zombie->canAttack(dt)) // gryzienie co sekunde
+                {
+                    plant->takeDamage(100);
+                }
+                break;
+            }
+        }
+        if (!blocked)
+        {
+            zombie->update(dt);
+        }
     }
     for (auto& bullet : bullets)
     {
@@ -55,6 +72,18 @@ void World::update(float dt)
     }
 
     checkCollisions();
+
+    plants.erase(
+        std::remove_if(
+            plants.begin(),
+            plants.end(),
+            [](const auto& plant)
+            {
+                return plant->isDead();
+            }
+        ),
+        plants.end()
+    );
 }
 
 void World::draw(sf::RenderWindow& window)

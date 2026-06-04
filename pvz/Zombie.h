@@ -8,6 +8,8 @@ class Zombie : public Entity
 protected:
     float speed;
     int damage;
+    float attackTimer;
+    float attackCooldown;
 
     sf::RectangleShape shape;
 
@@ -23,5 +25,7 @@ public:
 
     sf::FloatRect getBounds() const;
     bool isDead() const;
+
+    bool canAttack(float dt);
 
 };
