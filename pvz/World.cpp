@@ -9,7 +9,9 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 {
     bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
-    zombieKills = 0; //inicjalizacjia 
+    zombieKills = 0; //inicjalizacjia
+
+    sunPoints = 200;
 
     plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
@@ -18,7 +20,7 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     zombies.push_back(
         std::make_unique<BasicZombie>(1100.f, 300.f)
     );
-    // testowe 
+    // testowe
 }
 
 void World::update(float dt)
@@ -186,9 +188,17 @@ void World::placePlant(int row, int col, PlantType type)
 
     sf::Vector2f pos = grid.getCellPosition(row, col);
 
+    int cost = 0;
+
+    if(sunPoints < cost)
+    {
+        return;
+    }
+
     switch (type)
     {
     case PlantType::Peashooter:
+        cost = 100;
 
         plants.push_back(
             std::make_unique<Peashooter>(
@@ -200,6 +210,7 @@ void World::placePlant(int row, int col, PlantType type)
         break;
 
     case PlantType::Sunflower:
+        cost = 50;
 
         plants.push_back(
             std::make_unique<Sunflower>(
@@ -211,6 +222,7 @@ void World::placePlant(int row, int col, PlantType type)
         break;
 
     case PlantType::Wallnut:
+        cost = 50;
 
         plants.push_back(
             std::make_unique<Wallnut>(
@@ -221,4 +233,10 @@ void World::placePlant(int row, int col, PlantType type)
 
         break;
     }
+    sunPoints -= cost;
+}
+
+int World::getSunPoints() const
+{
+    return sunPoints;
 }

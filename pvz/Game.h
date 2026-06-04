@@ -11,6 +11,7 @@ private:
     sf::RenderWindow window;
     sf::Font font;
     sf::Text killText;
+    sf::Text sunText;
     World world;
 
     PlantType selectedPlant;

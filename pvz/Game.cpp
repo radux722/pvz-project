@@ -21,6 +21,10 @@ Game::Game()
     killText.setCharacterSize(28);
     killText.setFillColor(sf::Color::White);
     killText.setPosition(20.f, 20.f);
+    sunText.setFont(font);
+    sunText.setCharacterSize(28);
+    sunText.setFillColor(sf::Color::Yellow);
+    sunText.setPostion(20.f, 60.f);
 
     selectedPlant = PlantType::Peashooter;
 }
@@ -53,7 +57,7 @@ void Game::run()
                     int col = mouseX / 120;
 
                     world.placePlant(row, col, selectedPlant);
-                   
+
                 }
             }
             if (event.type == sf::Event::KeyPressed)
@@ -91,4 +95,11 @@ void Game::render()
     window.draw(killText);
 
     window.display();
+
+    sunText.setString(
+        "Sun: " + std::to_string(world.getSunPoints())
+    );
+
+    window.draw(sunText);
+    window.draw(killText);
 }

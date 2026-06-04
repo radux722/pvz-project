@@ -27,12 +27,14 @@ private:
     float zombieSpawnTimer;
 
     int zombieKills;
-   
+
 
     void checkCollisions();
     void spawnZombie();
 
     Grid grid;
+
+    int sunPoints;
 
 public:
     World();
@@ -41,9 +43,11 @@ public:
     void draw(sf::RenderWindow& window);
     void addPeashooter(float x, float y);
     void placePeashooter(int row, int col);
-    
+
     int getZombieKills() const; // getter
 
     void placePlant(int row, int col, PlantType type);
+
+    int getSunPoints() const;
 
 };

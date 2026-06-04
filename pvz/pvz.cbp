@@ -31,13 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="../../SFML/SFML-2.6.2/include" />
+			<Add directory="C:/Users/rybar/OneDrive/Dokumenty/PSiO/SFML/SFML-2.6.2/include" />
 		</Compiler>
 		<Linker>
 			<Add library="sfml-graphics" />
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
-			<Add directory="../../SFML/SFML-2.6.2/lib" />
+			<Add directory="C:/Users/rybar/OneDrive/Dokumenty/PSiO/SFML/SFML-2.6.2/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions />
