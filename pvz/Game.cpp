@@ -9,7 +9,7 @@ Game::Game()
     // licznik smierci
     //font.loadFromFile("arial.ttf");
     //std::cout << std::filesystem::current_path() << std::endl;
-    if (!font.loadFromFile("C:/Users/rradu/Desktop/pvz-project/pvz/assets/fonts/comic.ttf"))
+    if (!font.loadFromFile("C:/Users/rradu/Desktop/pvz-project/pvz/assets/fonts/comic.ttf")) // to trzeba zmienic !!
     {
         std::cout << "Blad ladowania czcionki!" << std::endl;
     }

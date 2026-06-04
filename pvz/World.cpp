@@ -11,13 +11,14 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     zombieSpawnTimer = 0.f;
     zombieKills = 0; //inicjalizacjia 
 
-    plants.push_back(
+    /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
     );
 
     zombies.push_back(
         std::make_unique<BasicZombie>(1000.f, 300.f)
-    );
+    );*/
+    // testowe 
 }
 
 void World::update(float dt)
@@ -26,7 +27,7 @@ void World::update(float dt)
     bulletTimer += dt;
     zombieSpawnTimer += dt;
 
-    if (bulletTimer >= 1.f)
+    /*if (bulletTimer >= 1.f)
     {
         bullets.push_back(std::make_unique<Bullet>(180.f, 330.f));
         bulletTimer = 0.f;
@@ -37,6 +38,7 @@ void World::update(float dt)
         spawnZombie();
         zombieSpawnTimer = 0.f;
     }
+    */
 
     for (auto& plant : plants)
     {
