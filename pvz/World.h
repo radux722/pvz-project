@@ -34,7 +34,7 @@ private:
 
     Grid grid;
 
-    int sunPoints;
+    int sunPoints = 50;
 
 public:
     World();
@@ -49,5 +49,13 @@ public:
     void placePlant(int row, int col, PlantType type);
 
     int getSunPoints() const;
+    void addSunPoints(int amount) { sunPoints += amount; }
+
+    // fale zombie
+    int currentWave;
+    int zombiesToSpawn;
+    float waveTimer;
+    float spawnTimer;
+    int getCurrentWave() const;
 
 };

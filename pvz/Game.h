@@ -12,6 +12,17 @@ private:
     sf::Font font;
     sf::Text killText;
     sf::Text sunText;
+
+    sf::RectangleShape peashooterButton;
+    sf::RectangleShape sunflowerButton;
+    sf::RectangleShape wallnutButton;
+
+    sf::Text peashooterText;
+    sf::Text sunflowerText;
+    sf::Text wallnutText;
+
+    sf::Text waveText;
+
     World world;
 
     PlantType selectedPlant;

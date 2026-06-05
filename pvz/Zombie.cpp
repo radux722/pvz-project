@@ -2,7 +2,7 @@
 
 Zombie::Zombie(float x, float y)
     : Entity(x, y, 100),
-    speed(50.f),
+    speed(25.f),
     damage(10),
     attackTimer(0.f),
     attackCooldown(1.f)

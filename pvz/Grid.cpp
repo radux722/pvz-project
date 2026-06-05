@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include <iostream>
 
 Grid::Grid()
 {
@@ -13,6 +14,11 @@ Grid::Grid()
 
 bool Grid::placePlant(int row, int col)
 {
+
+    std::cout << "Row: " << row
+        << " Col: " << col
+        << std::endl;
+
     if (row < 0 || row >= ROWS)
         return false;
 

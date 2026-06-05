@@ -4,48 +4,101 @@
 #include "Sunflower.h"
 #include "Wallnut.h"
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+
 
 World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 {
     bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
-    zombieKills = 0; //inicjalizacjia
+    zombieKills = 0;
+    sunPoints = 250;
 
-    sunPoints = 200;
-
-    plants.push_back(
+    /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
     );
+    */
 
-    zombies.push_back(
+    /*zombies.push_back(
         std::make_unique<BasicZombie>(1100.f, 300.f)
-    );
-    // testowe
+    );*/
+   
+    // fale zombie
+    currentWave = 1;
+    zombiesToSpawn = 5;
+    waveTimer = 0.f;
+    spawnTimer = 0.f;
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
 }
 
 void World::update(float dt)
 {
+    // logika fal i spawn zombie co 2 sek
+    waveTimer += dt/2;
+    spawnTimer += dt;
 
-    bulletTimer += dt;
-    zombieSpawnTimer += dt;
-
-    /*if (bulletTimer >= 1.f)
+    if (zombiesToSpawn > 0 && spawnTimer >= 2.f)
     {
-        bullets.push_back(std::make_unique<Bullet>(180.f, 330.f));
-        bulletTimer = 0.f;
+        spawnZombie();
+
+        zombiesToSpawn--;
+
+        spawnTimer = 0.f;
     }
 
-    if (zombieSpawnTimer >= 3.f)
+    if (zombiesToSpawn == 0 && zombies.empty())
+    {
+        currentWave++;
+
+        zombiesToSpawn = currentWave * 5;
+    }
+
+    
+    zombieSpawnTimer += dt;
+
+    
+
+    /*if (zombieSpawnTimer >= 3.f)
     {
         spawnZombie();
         zombieSpawnTimer = 0.f;
-    }
-    */
+    }*/
+    
 
     for (auto& plant : plants)
     {
         plant->update(dt);
     }
+
+    // strzelanie 
+    bulletTimer += dt;
+    for (auto& plant : plants)
+    {
+        Peashooter* peashooter =
+            dynamic_cast<Peashooter*>(plant.get());
+
+        if (peashooter && bulletTimer >= 1.f)
+        {
+            std::cout << "SHOT\n"; // do testu
+
+            sf::FloatRect bounds =
+                peashooter->getBounds();
+
+            bullets.push_back(
+                std::make_unique<Bullet>(
+                    bounds.left + bounds.width,
+                    bounds.top + bounds.height / 2.f
+                )
+            );
+        }
+    }
+    if (bulletTimer >= 1.f)
+    {
+        bulletTimer = 0.f;
+    }
+
 
     for (auto& plant : plants)
     {
@@ -53,7 +106,7 @@ void World::update(float dt)
 
         if (sunflower && sunflower->canProduceSun())
         {
-            sunPoints += 25;
+            sunPoints += 25; //addSunPoints(25)
         }
     }
 
@@ -120,7 +173,23 @@ void World::draw(sf::RenderWindow& window)
 
 void World::spawnZombie()
 {
-    zombies.push_back(std::make_unique<BasicZombie>(1100.f, 300.f));
+    const float rows[5] =
+    {
+        80.f,
+        200.f,
+        320.f,
+        440.f,
+        560.f
+    };
+
+    int randomRow = std::rand() % 5;
+
+    zombies.push_back(
+        std::make_unique<BasicZombie>(
+            1100.f,
+            rows[randomRow]
+        )
+    );
 }
 
 void World::checkCollisions()
@@ -192,62 +261,67 @@ void World::placePeashooter(int row, int col)
     plants.push_back(std::make_unique<Peashooter>(pos.x, pos.y));
 }
 
+
+
 void World::placePlant(int row, int col, PlantType type)
 {
-    if (!grid.placePlant(row, col))
-        return;
-
-    sf::Vector2f pos = grid.getCellPosition(row, col);
-
     int cost = 0;
-
-    if(sunPoints < cost)
-    {
-        return;
-    }
 
     switch (type)
     {
     case PlantType::Peashooter:
         cost = 100;
-
-        plants.push_back(
-            std::make_unique<Peashooter>(
-                pos.x,
-                pos.y
-            )
-        );
-
         break;
 
     case PlantType::Sunflower:
         cost = 50;
-
-        plants.push_back(
-            std::make_unique<Sunflower>(
-                pos.x,
-                pos.y
-            )
-        );
-
         break;
 
     case PlantType::Wallnut:
         cost = 50;
-
-        plants.push_back(
-            std::make_unique<Wallnut>(
-                pos.x,
-                pos.y
-            )
-        );
-
         break;
     }
+
+    if (sunPoints < cost)
+    {
+        return;
+    }
+
+    if (!grid.placePlant(row, col))
+        return;
+
+    sf::Vector2f pos = grid.getCellPosition(row, col);
+
+    switch (type)
+    {
+    case PlantType::Peashooter:
+        plants.push_back(
+            std::make_unique<Peashooter>(pos.x, pos.y)
+        );
+        break;
+
+    case PlantType::Sunflower:
+        plants.push_back(
+            std::make_unique<Sunflower>(pos.x, pos.y)
+        );
+        break;
+
+    case PlantType::Wallnut:
+        plants.push_back(
+            std::make_unique<Wallnut>(pos.x, pos.y)
+        );
+        break;
+    }
+
     sunPoints -= cost;
 }
 
 int World::getSunPoints() const
 {
     return sunPoints;
+}
+
+int World::getCurrentWave() const
+{
+    return currentWave;
 }
