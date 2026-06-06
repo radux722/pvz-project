@@ -22,6 +22,7 @@ private:
     sf::Text wallnutText;
 
     sf::Text waveText;
+    sf::Text gameOverText;
 
     World world;
 

@@ -60,6 +60,14 @@ Game::Game()
     waveText.setFillColor(sf::Color::Red);
     waveText.setPosition(20.f, 100.f);
 
+    // game over
+    gameOverText.setFont(font);
+    gameOverText.setCharacterSize(72);
+    gameOverText.setFillColor(sf::Color::Red);
+    gameOverText.setString("GAME OVER");
+
+    gameOverText.setPosition(350.f, 300.f);
+
     //selectedPlant = PlantType::Peashooter;
 }
 
@@ -131,7 +139,10 @@ void Game::run()
             }
         }
 
-        update(dt);
+        if (!world.isGameOver())
+        {
+            update(dt);
+        }
         render();
     }
 }
@@ -193,6 +204,11 @@ void Game::render()
     window.draw(peashooterText);
     window.draw(sunflowerText);
     window.draw(wallnutText);
+    
+    if (world.isGameOver())
+    {
+        window.draw(gameOverText);
+    }
 
 
 

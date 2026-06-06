@@ -36,6 +36,8 @@ private:
 
     int sunPoints = 50;
 
+    bool gameOver;
+
 public:
     World();
 
@@ -57,5 +59,7 @@ public:
     float waveTimer;
     float spawnTimer;
     int getCurrentWave() const;
+
+    bool isGameOver() const;
 
 };

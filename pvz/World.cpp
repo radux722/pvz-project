@@ -14,7 +14,8 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
     zombieKills = 0;
-    sunPoints = 250;
+    sunPoints = 200;
+    gameOver = false;
 
     /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
@@ -129,7 +130,13 @@ void World::update(float dt)
         if (!blocked)
         {
             zombie->update(dt);
+
+            if (zombie->getBounds().left <= 0.f)
+            {
+                gameOver = true;
+            }
         }
+
     }
     for (auto& bullet : bullets)
     {
@@ -324,4 +331,9 @@ int World::getSunPoints() const
 int World::getCurrentWave() const
 {
     return currentWave;
+}
+
+bool World::isGameOver() const
+{
+    return gameOver;
 }
