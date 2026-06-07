@@ -23,7 +23,7 @@ private:
     std::vector<std::unique_ptr<Zombie>> zombies;
     std::vector<std::unique_ptr<Bullet>> bullets;
 
-    float bulletTimer;
+ 
     float zombieSpawnTimer;
 
     int zombieKills;

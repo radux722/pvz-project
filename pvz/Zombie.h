@@ -28,4 +28,6 @@ public:
 
     bool canAttack(float dt);
 
+    int getDamage() const;
+
 };

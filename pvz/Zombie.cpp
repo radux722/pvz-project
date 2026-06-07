@@ -3,7 +3,7 @@
 Zombie::Zombie(float x, float y)
     : Entity(x, y, 100),
     speed(25.f),
-    damage(10),
+    damage(100),
     attackTimer(0.f),
     attackCooldown(1.f)
 {
@@ -53,4 +53,9 @@ bool Zombie::canAttack(float dt)
     }
 
     return false;
+}
+
+int Zombie::getDamage() const
+{
+    return damage;
 }

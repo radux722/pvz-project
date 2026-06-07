@@ -11,7 +11,7 @@
 
 World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 {
-    bulletTimer = 0.f;
+    //bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
     zombieKills = 0;
     sunPoints = 200;
@@ -74,19 +74,39 @@ void World::update(float dt)
     }
 
     // strzelanie 
-    bulletTimer += dt;
     for (auto& plant : plants)
     {
         Peashooter* peashooter =
             dynamic_cast<Peashooter*>(plant.get());
 
-        if (peashooter && bulletTimer >= 1.f)
+        // pomijanie nie Peashooterow
+        if (!peashooter)
+            continue;
+
+        bool zombieInRow = false;
+        for (auto& zombie : zombies)
         {
-            std::cout << "SHOT\n"; // do testu
+            /*std::cout << "Zombie: " << zombie->getBounds().top
+                << " Plant: " << peashooter->getBounds().top
+                << std::endl;*/
 
-            sf::FloatRect bounds =
-                peashooter->getBounds();
+            if (std::abs(
+                zombie->getBounds().top -
+                peashooter->getBounds().top
+            ) < 100.f)
+            {
+                zombieInRow = true;
+                break;
+            }
+        }
 
+        // strzelanie tylko gdy zombie w row
+        if (zombieInRow && peashooter->canShoot(dt))
+        {
+            //std::cout << "SHOT\n"; // do testu
+
+            sf::FloatRect bounds = peashooter->getBounds();
+                
             bullets.push_back(
                 std::make_unique<Bullet>(
                     bounds.left + bounds.width,
@@ -94,10 +114,6 @@ void World::update(float dt)
                 )
             );
         }
-    }
-    if (bulletTimer >= 1.f)
-    {
-        bulletTimer = 0.f;
     }
 
 
@@ -122,7 +138,8 @@ void World::update(float dt)
                 blocked = true;
                 if (zombie->canAttack(dt)) // gryzienie co sekunde
                 {
-                    plant->takeDamage(100);
+                    //plant->takeDamage(100);
+                    plant->takeDamage(zombie->getDamage());
                 }
                 break;
             }

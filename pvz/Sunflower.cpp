@@ -3,6 +3,9 @@
 Sunflower::Sunflower(float x, float y)
     : Plant(x, y)
 {
+    health = 250;
+    cost = 50;
+
     shape.setFillColor(sf::Color::Yellow);
     sunTimer= 0.f;
 }

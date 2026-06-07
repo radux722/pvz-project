@@ -3,7 +3,8 @@
 Wallnut::Wallnut(float x, float y)
     : Plant(x, y)
 {
-    health = 1000;
+    health = 3000;
+    cost = 50;
 
     shape.setFillColor(sf::Color(139, 69, 19));
 }
