@@ -14,15 +14,19 @@ void Peashooter::attack()
 {
 }
 
-bool Peashooter::canShoot(float dt)
+void Peashooter::update(float dt)
 {
+    Plant::update(dt);
+
     shootTimer += dt;
+}
 
-    if (shootTimer >= attackSpeed)
-    {
-        shootTimer = 0.f;
-        return true;
-    }
+bool Peashooter::canShoot() const
+{
+    return shootTimer >= 1.5f;
+}
 
-    return false;
+void Peashooter::resetShootTimer()
+{
+    shootTimer = 0.f;
 }

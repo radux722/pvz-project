@@ -18,8 +18,11 @@ public:
     Grid();
 
     bool placePlant(int row, int col);
-
+    void removePlant(int row, int col);
     sf::Vector2f getCellPosition(int row, int col) const;
 
     void draw(sf::RenderWindow& window);
+
+
+
 };

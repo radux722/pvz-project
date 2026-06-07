@@ -12,5 +12,8 @@ public:
 
     void attack() override;
 
-    bool canShoot(float dt);
+    void update(float dt) override;
+
+    bool canShoot() const;
+    void resetShootTimer();
 };

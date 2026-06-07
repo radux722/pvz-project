@@ -101,7 +101,7 @@ void World::update(float dt)
         }
 
         // strzelanie tylko gdy zombie w row
-        if (zombieInRow && peashooter->canShoot(dt))
+        if (zombieInRow && peashooter->canShoot())
         {
             //std::cout << "SHOT\n"; // do testu
 
@@ -167,9 +167,20 @@ void World::update(float dt)
         std::remove_if(
             plants.begin(),
             plants.end(),
-            [](const auto& plant)
+
+            [this](const auto& plant)
             {
-                return plant->isDead();
+                if (plant->isDead())
+                {
+                    grid.removePlant(
+                        plant->getRow(),
+                        plant->getCol()
+                    );
+
+                    return true;
+                }
+
+                return false;
             }
         ),
         plants.end()

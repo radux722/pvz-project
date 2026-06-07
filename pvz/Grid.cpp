@@ -71,3 +71,14 @@ void Grid::draw(sf::RenderWindow& window)
         window.draw(line);
     }
 }
+
+void Grid::removePlant(int row, int col)
+{
+    if (row < 0 || row >= ROWS)
+        return;
+
+    if (col < 0 || col >= COLS)
+        return;
+
+    occupied[row][col] = false;
+}

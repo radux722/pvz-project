@@ -37,3 +37,19 @@ bool Plant::isDead() const
 {
     return health <= 0;
 }
+
+void Plant::setGridPosition(int r, int c)
+{
+    row = r;
+    col = c;
+}
+
+int Plant::getRow() const
+{
+    return row;
+}
+
+int Plant::getCol() const
+{
+    return col;
+}

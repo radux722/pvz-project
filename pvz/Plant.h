@@ -15,6 +15,9 @@ protected:
     float attackSpeed;
     int health;
 
+    int row;
+    int col;
+
     sf::RectangleShape shape;
 
 public:
@@ -29,4 +32,8 @@ public:
 
     void takeDamage(int damage);
     bool isDead() const;
+
+    void setGridPosition(int r, int c);
+    int getRow() const;
+    int getCol() const;
 };
