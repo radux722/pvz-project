@@ -111,8 +111,10 @@ void World::update(float dt)
                 std::make_unique<Bullet>(
                     bounds.left + bounds.width,
                     bounds.top + bounds.height / 2.f
+
                 )
             );
+            peashooter->resetShootTimer();
         }
     }
 
@@ -298,7 +300,7 @@ void World::placePeashooter(int row, int col)
 
 
 
-void World::placePlant(int row, int col, PlantType type)
+/*void World::placePlant(int row, int col, PlantType type)
 {
     int cost = 0;
 
@@ -346,6 +348,78 @@ void World::placePlant(int row, int col, PlantType type)
             std::make_unique<Wallnut>(pos.x, pos.y)
         );
         break;
+    }
+
+    sunPoints -= cost;
+}*/
+
+void World::placePlant(int row, int col, PlantType type)
+{
+    int cost = 0;
+
+    switch (type)
+    {
+    case PlantType::Peashooter:
+        cost = 100;
+        break;
+
+    case PlantType::Sunflower:
+        cost = 50;
+        break;
+
+    case PlantType::Wallnut:
+        cost = 50;
+        break;
+    }
+
+    // Za mało słońca
+    if (sunPoints < cost)
+    {
+        return;
+    }
+
+    // Pole zajęte
+    if (!grid.placePlant(row, col))
+    {
+        return;
+    }
+
+    sf::Vector2f pos = grid.getCellPosition(row, col);
+
+    switch (type)
+    {
+    case PlantType::Peashooter:
+    {
+        auto pea = std::make_unique<Peashooter>(pos.x, pos.y);
+
+        pea->setGridPosition(row, col);
+
+        plants.push_back(std::move(pea));
+
+        break;
+    }
+
+    case PlantType::Sunflower:
+    {
+        auto sun = std::make_unique<Sunflower>(pos.x, pos.y);
+
+        sun->setGridPosition(row, col);
+
+        plants.push_back(std::move(sun));
+
+        break;
+    }
+
+    case PlantType::Wallnut:
+    {
+        auto wall = std::make_unique<Wallnut>(pos.x, pos.y);
+
+        wall->setGridPosition(row, col);
+
+        plants.push_back(std::move(wall));
+
+        break;
+    }
     }
 
     sunPoints -= cost;
