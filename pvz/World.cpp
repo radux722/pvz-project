@@ -278,80 +278,11 @@ void World::checkCollisions()
 
 }
 
-void World::addPeashooter(float x, float y)
-{
-    plants.push_back(std::make_unique<Peashooter>(x, y));
-}
-
 int World::getZombieKills() const
 {
     return zombieKills;
 }
 
-void World::placePeashooter(int row, int col)
-{
-    if (!grid.placePlant(row, col))
-        return;
-
-    sf::Vector2f pos = grid.getCellPosition(row, col);
-
-    plants.push_back(std::make_unique<Peashooter>(pos.x, pos.y));
-}
-
-
-
-/*void World::placePlant(int row, int col, PlantType type)
-{
-    int cost = 0;
-
-    switch (type)
-    {
-    case PlantType::Peashooter:
-        cost = 100;
-        break;
-
-    case PlantType::Sunflower:
-        cost = 50;
-        break;
-
-    case PlantType::Wallnut:
-        cost = 50;
-        break;
-    }
-
-    if (sunPoints < cost)
-    {
-        return;
-    }
-
-    if (!grid.placePlant(row, col))
-        return;
-
-    sf::Vector2f pos = grid.getCellPosition(row, col);
-
-    switch (type)
-    {
-    case PlantType::Peashooter:
-        plants.push_back(
-            std::make_unique<Peashooter>(pos.x, pos.y)
-        );
-        break;
-
-    case PlantType::Sunflower:
-        plants.push_back(
-            std::make_unique<Sunflower>(pos.x, pos.y)
-        );
-        break;
-
-    case PlantType::Wallnut:
-        plants.push_back(
-            std::make_unique<Wallnut>(pos.x, pos.y)
-        );
-        break;
-    }
-
-    sunPoints -= cost;
-}*/
 
 void World::placePlant(int row, int col, PlantType type)
 {
