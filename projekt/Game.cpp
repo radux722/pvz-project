@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include <filesystem>
 
 Game::Game()
     : window(sf::VideoMode(1280, 720), "Plants vs Zombies")
@@ -8,8 +9,8 @@ Game::Game()
 
     // licznik smierci
     //font.loadFromFile("arial.ttf");
-    //std::cout << std::filesystem::current_path() << std::endl;
-    if (!font.loadFromFile("C:/Users/rradu/Desktop/pvz-project/pvz/assets/fonts/comic.ttf")) // to trzeba zmienic !!
+    std::cout << std::filesystem::current_path() << std::endl;
+    if (!font.loadFromFile("assets/fonts/comic.ttf")) // to trzeba zmienic !!
     {
         std::cout << "Blad ladowania czcionki!" << std::endl;
     }
