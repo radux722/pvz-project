@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <fstream>
 
 
 World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
@@ -16,6 +17,7 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     zombieKills = 0;
     sunPoints = 200;
     gameOver = false;
+    gameWon = false;
 
     /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
@@ -53,7 +55,14 @@ void World::update(float dt)
     {
         currentWave++;
 
-        zombiesToSpawn = currentWave * 5;
+        if (currentWave > 10) // po 10 falach win
+        {
+            gameWon = true;
+        }
+        else
+        {
+            zombiesToSpawn = currentWave + 4;
+        }
     }
 
     
@@ -218,6 +227,73 @@ void World::spawnZombie()
         440.f,
         560.f
     };
+    int randomRow = std::rand() % 5;
+
+    int chance = std::rand() % 100;
+
+    if (currentWave < 3)
+    {
+        zombies.push_back(
+            std::make_unique<BasicZombie>(
+                1100.f,
+                rows[randomRow]
+            )
+        );
+    }
+    else if (currentWave < 5)
+    {
+        if (chance < 20)
+        {
+            zombies.push_back(
+                std::make_unique<FastZombie>(
+                    1100.f,
+                    rows[randomRow]
+                )
+            );
+        }
+        else
+        {
+            zombies.push_back(
+                std::make_unique<BasicZombie>(
+                    1100.f,
+                    rows[randomRow]
+                )
+            );
+        }
+    }
+    else
+    {
+        if (chance < 40)
+        {
+            zombies.push_back(
+                std::make_unique<FastZombie>(
+                    1100.f,
+                    rows[randomRow]
+                )
+            );
+        }
+        else
+        {
+            zombies.push_back(
+                std::make_unique<BasicZombie>(
+                    1100.f,
+                    rows[randomRow]
+                )
+            );
+        }
+    }
+
+
+
+
+    /*const float rows[5] =
+    {
+        80.f,
+        200.f,
+        320.f,
+        440.f,
+        560.f
+    };
 
     int randomRow = std::rand() % 5;
 
@@ -226,7 +302,9 @@ void World::spawnZombie()
             1100.f,
             rows[randomRow]
         )
-    );
+    );*/
+
+
 }
 
 void World::checkCollisions()
@@ -356,6 +434,105 @@ void World::placePlant(int row, int col, PlantType type)
     sunPoints -= cost;
 }
 
+
+void World::saveGame(const std::string& filename)
+{
+    std::ofstream file(filename);
+
+    if (!file.is_open())
+        return;
+
+    file << sunPoints << "\n";
+    file << currentWave << "\n";
+    file << zombieKills << "\n";
+
+    file << plants.size() << "\n";
+
+    for (auto& plant : plants)
+    {
+        PlantType type;
+
+        if (dynamic_cast<Peashooter*>(plant.get()))
+            type = PlantType::Peashooter;
+        else if (dynamic_cast<Sunflower*>(plant.get()))
+            type = PlantType::Sunflower;
+        else
+            type = PlantType::Wallnut;
+
+        file << static_cast<int>(type) << " "
+            << plant->getRow() << " "
+            << plant->getCol() << "\n";
+    }
+
+    file.close();
+}
+
+void World::loadGame(const std::string& filename)
+{
+    std::ifstream file(filename);
+
+    if (!file.is_open())
+        return;
+
+    plants.clear();
+    zombies.clear();
+    bullets.clear();
+
+    grid = Grid();
+
+    file >> sunPoints;
+    file >> currentWave;
+    file >> zombieKills;
+
+    int plantCount;
+    file >> plantCount;
+
+    for (int i = 0; i < plantCount; i++)
+    {
+        int typeInt;
+        int row;
+        int col;
+
+        file >> typeInt >> row >> col;
+
+        PlantType type = static_cast<PlantType>(typeInt);
+
+        sf::Vector2f pos = grid.getCellPosition(row, col);
+
+        grid.placePlant(row, col);
+
+        switch (type)
+        {
+        case PlantType::Peashooter:
+        {
+            auto pea = std::make_unique<Peashooter>(pos.x, pos.y);
+            pea->setGridPosition(row, col);
+            plants.push_back(std::move(pea));
+            break;
+        }
+
+        case PlantType::Sunflower:
+        {
+            auto sun = std::make_unique<Sunflower>(pos.x, pos.y);
+            sun->setGridPosition(row, col);
+            plants.push_back(std::move(sun));
+            break;
+        }
+
+        case PlantType::Wallnut:
+        {
+            auto wall = std::make_unique<Wallnut>(pos.x, pos.y);
+            wall->setGridPosition(row, col);
+            plants.push_back(std::move(wall));
+            break;
+        }
+        }
+    }
+
+    file.close();
+}
+
+
 int World::getSunPoints() const
 {
     return sunPoints;
@@ -369,4 +546,9 @@ int World::getCurrentWave() const
 bool World::isGameOver() const
 {
     return gameOver;
+}
+
+bool World::isGameWon() const
+{
+    return gameWon;
 }

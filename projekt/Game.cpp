@@ -66,8 +66,72 @@ Game::Game()
     gameOverText.setCharacterSize(72);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setString("GAME OVER");
-
     gameOverText.setPosition(350.f, 300.f);
+
+    // game won
+    winText.setFont(font);
+    winText.setCharacterSize(72);
+    winText.setFillColor(sf::Color::Yellow);
+    winText.setString("YOU WIN!");
+    winText.setPosition(380.f, 300.f);
+
+    paused = false;
+
+    // menu
+    state = GameState::MainMenu;
+    titleText.setFont(font);
+    titleText.setString("PLANTS VS ZOMBIES");
+    titleText.setCharacterSize(60);
+    titleText.setFillColor(sf::Color::White);
+    titleText.setPosition(300.f, 120.f);
+
+    startButton.setSize({ 300.f, 80.f });
+    startButton.setPosition(490.f, 280.f);
+    startButton.setFillColor(sf::Color(80, 180, 80));
+
+    startText.setFont(font);
+    startText.setString("START");
+    startText.setCharacterSize(40);
+    startText.setPosition(585.f, 295.f);
+   
+    loadButton.setSize({ 300.f,80.f });
+    loadButton.setPosition(490.f, 390.f);
+    loadButton.setFillColor(sf::Color(180, 180, 80));
+
+    loadText.setFont(font);
+    loadText.setString("LOAD");
+    loadText.setCharacterSize(40);
+    loadText.setPosition(590.f, 405.f);
+
+    exitButton.setSize({ 300.f,80.f });
+    exitButton.setPosition(490.f, 500.f);
+    exitButton.setFillColor(sf::Color(180, 80, 80));
+
+    exitText.setFont(font);
+    exitText.setString("EXIT");
+    exitText.setCharacterSize(40);
+    exitText.setPosition(600.f, 515.f);
+
+    // save and load
+    saveButton.setSize({ 120.f, 50.f });
+    saveButton.setPosition(1100.f, 10.f);
+    saveButton.setFillColor(sf::Color(80, 80, 200));
+
+    saveText.setFont(font);
+    saveText.setString("SAVE");
+    saveText.setCharacterSize(24);
+    saveText.setPosition(1125.f, 20.f);
+
+    loadButtonGame.setSize({ 120.f,50.f });
+    loadButtonGame.setPosition(1100.f, 70.f);
+    loadButtonGame.setFillColor(sf::Color(80, 160, 200));
+
+    loadGameText.setFont(font);
+    loadGameText.setString("LOAD");
+    loadGameText.setCharacterSize(24);
+    loadGameText.setPosition(1125.f, 80.f);
+
+
 
     //selectedPlant = PlantType::Peashooter;
 }
@@ -95,8 +159,45 @@ void Game::run()
                     static_cast<float>(event.mouseButton.x),
                     static_cast<float>(event.mouseButton.y)
                 );
-              
-                // gui nie stawia od razu rosliny
+
+                // ================= MENU GŁÓWNE =================
+                if (state == GameState::MainMenu)
+                {
+                    if (startButton.getGlobalBounds().contains(mousePos))
+                    {
+                        state = GameState::Playing;
+                    }
+
+                    if (loadButton.getGlobalBounds().contains(mousePos))
+                    {
+                        world.loadGame("save.txt");
+                        state = GameState::Playing;
+                    }
+
+                    if (exitButton.getGlobalBounds().contains(mousePos))
+                    {
+                        window.close();
+                    }
+
+                    continue;
+                }
+
+                // ================= SAVE / LOAD W TRAKCIE GRY =================
+                if (saveButton.getGlobalBounds().contains(mousePos))
+                {
+                    world.saveGame("save.txt");
+                    std::cout << "Zapisano gre!\n";
+                    continue;
+                }
+
+                if (loadButtonGame.getGlobalBounds().contains(mousePos))
+                {
+                    world.loadGame("save.txt");
+                    std::cout << "Wczytano gre!\n";
+                    continue;
+                }
+
+                // ================= GUI ROŚLIN =================
                 if (peashooterButton.getGlobalBounds().contains(mousePos))
                 {
                     selectedPlant = PlantType::Peashooter;
@@ -115,6 +216,7 @@ void Game::run()
                     continue;
                 }
 
+                // ================= SADZENIE ROŚLIN =================
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
                     int mouseX = event.mouseButton.x;
@@ -124,11 +226,15 @@ void Game::run()
                     int col = mouseX / 120;
 
                     world.placePlant(row, col, selectedPlant);
-
                 }
             }
+
+
             if (event.type == sf::Event::KeyPressed)
             {
+                if (event.key.code == sf::Keyboard::Escape)
+                    paused = !paused;
+
                 if (event.key.code == sf::Keyboard::Num1)
                     selectedPlant = PlantType::Peashooter;
 
@@ -140,7 +246,7 @@ void Game::run()
             }
         }
 
-        if (!world.isGameOver())
+        if (state == GameState::Playing && !world.isGameOver() && !paused && !world.isGameWon())
         {
             update(dt);
         }
@@ -188,7 +294,24 @@ void Game::update(float dt)
 
 void Game::render()
 {
-    
+    // menu
+    if (state == GameState::MainMenu)
+    {
+        window.clear(sf::Color(30, 120, 30));
+
+        window.draw(titleText);
+
+        window.draw(startButton);
+        window.draw(loadButton);
+        window.draw(exitButton);
+
+        window.draw(startText);
+        window.draw(loadText);
+        window.draw(exitText);
+
+        window.display();
+        return;
+    }
 
     window.clear(sf::Color(30, 120, 30));
 
@@ -205,10 +328,22 @@ void Game::render()
     window.draw(peashooterText);
     window.draw(sunflowerText);
     window.draw(wallnutText);
+
+    // save and load
+    window.draw(saveButton);
+    window.draw(saveText);
+
+    window.draw(loadButtonGame);
+    window.draw(loadGameText);
     
     if (world.isGameOver())
     {
         window.draw(gameOverText);
+    }
+
+    if (world.isGameWon())
+    {
+        window.draw(winText);
     }
 
 

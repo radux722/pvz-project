@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include "Plant.h"
 #include "Zombie.h"
@@ -37,6 +38,7 @@ private:
     int sunPoints = 50;
 
     bool gameOver;
+    bool gameWon;
 
 public:
     World();
@@ -61,5 +63,10 @@ public:
     int getCurrentWave() const;
 
     bool isGameOver() const;
+    bool isGameWon() const;
+
+    // zapisywanie i wczytywanie
+    void saveGame(const std::string& filename);
+    void loadGame(const std::string& filename);
 
 };

@@ -23,10 +23,33 @@ private:
 
     sf::Text waveText;
     sf::Text gameOverText;
+    sf::Text winText;
+
+    enum class GameState // menu
+    {
+        MainMenu,
+        Playing,
+        Paused
+    };
+    GameState state;
+    sf::RectangleShape startButton;
+    sf::RectangleShape loadButton;
+    sf::RectangleShape exitButton;
+    sf::Text titleText;
+    sf::Text startText;
+    sf::Text loadText;
+    sf::Text exitText;
+
+    sf::RectangleShape saveButton;
+    sf::RectangleShape loadButtonGame;
+    sf::Text saveText;
+    sf::Text loadGameText;
 
     World world;
 
     PlantType selectedPlant;
+    
+    bool paused;
 
 public:
     Game();
