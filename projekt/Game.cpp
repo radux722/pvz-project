@@ -147,7 +147,7 @@ Game::Game()
     pauseText.setCharacterSize(24);
     pauseText.setFillColor(sf::Color::White);
     pauseText.setPosition(1110.f, 140.f);
-
+    
     pausedText.setFont(font);
     pausedText.setCharacterSize(72);
     pausedText.setFillColor(sf::Color::White);
@@ -285,10 +285,18 @@ void Game::run()
             }
         }
 
-        if (state == GameState::Playing && !world.isGameOver() && !paused && !world.isGameWon())
+        if (state == GameState::Playing)
         {
+            if (!world.isGameOver() &&
+                !paused &&
+                !world.isGameWon())
+            {
+                world.update(dt);
+            }
+
             update(dt);
         }
+
         render();
     }
 }
@@ -367,7 +375,11 @@ void Game::update(float dt)
         );
     }
 
-    world.update(dt);
+    //world.update(dt);
+    waveText.setString(
+        "Wave: " +
+        std::to_string(world.getCurrentWave())
+    );
 }
 
 void Game::render()
@@ -423,6 +435,12 @@ void Game::render()
     window.draw(pauseText);
     
     
+
+    if (world.isGameOver())
+    {
+        window.draw(gameOverText);
+        window.draw(statisticsText);
+    }
 
     if (world.isGameWon())
     {
