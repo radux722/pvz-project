@@ -40,6 +40,10 @@ Game::Game()
     wallnutButton.setPosition(640.f, 10.f);
     wallnutButton.setFillColor(sf::Color(160, 100, 50));
 
+    snowpeaButton.setSize(sf::Vector2f(150.f, 60.f));
+    snowpeaButton.setPosition(810.f, 10.f);
+    snowpeaButton.setFillColor(sf::Color(100, 150, 255));
+
     peashooterText.setFont(font);
     peashooterText.setCharacterSize(20);
     peashooterText.setString("Pea (100)");
@@ -54,6 +58,11 @@ Game::Game()
     wallnutText.setCharacterSize(20);
     wallnutText.setString("Wall (50)");
     wallnutText.setPosition(665.f, 25.f);
+
+    snowpeaText.setFont(font);
+    snowpeaText.setCharacterSize(20);
+    snowpeaText.setString("Snow (175)");
+    snowpeaText.setPosition(825.f, 25.f);
 
     // fale zombie
     waveText.setFont(font);
@@ -233,6 +242,12 @@ void Game::run()
                     continue;
                 }
 
+                if (snowpeaButton.getGlobalBounds().contains(mousePos)) // <-- DODAJ TO
+                {
+                    selectedPlant = PlantType::SnowPea;
+                    continue;
+                }
+
                 if (sunflowerButton.getGlobalBounds().contains(mousePos))
                 {
                     selectedPlant = PlantType::Sunflower;
@@ -272,6 +287,9 @@ void Game::run()
 
                 if (event.key.code == sf::Keyboard::Num3)
                     selectedPlant = PlantType::Wallnut;
+
+                if (event.key.code == sf::Keyboard::Num4)
+                    selectedPlant = PlantType::SnowPea;
 
                 if (world.isGameOver() || world.isGameWon())
                 {
@@ -321,6 +339,7 @@ void Game::update(float dt)
     peashooterButton.setOutlineThickness(0);
     sunflowerButton.setOutlineThickness(0);
     wallnutButton.setOutlineThickness(0);
+    snowpeaButton.setOutlineThickness(0);
     switch (selectedPlant)
     {
     case PlantType::Peashooter:
@@ -336,6 +355,11 @@ void Game::update(float dt)
     case PlantType::Wallnut:
         wallnutButton.setOutlineThickness(3);
         wallnutButton.setOutlineColor(sf::Color::White);
+        break;
+
+    case PlantType::SnowPea:
+        snowpeaButton.setOutlineThickness(3);
+        snowpeaButton.setOutlineColor(sf::Color::White);
         break;
     }
 
@@ -415,9 +439,11 @@ void Game::render()
     window.draw(peashooterButton);
     window.draw(sunflowerButton);
     window.draw(wallnutButton);
+    window.draw(snowpeaButton);
     window.draw(peashooterText);
     window.draw(sunflowerText);
     window.draw(wallnutText);
+    window.draw(snowpeaText);
 
     
 

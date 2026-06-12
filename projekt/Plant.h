@@ -5,7 +5,7 @@
 
 enum class PlantType
 {
-    Peashooter, Sunflower, Wallnut
+    Peashooter, Sunflower, Wallnut, SnowPea
 };
 
 class Plant : public Entity

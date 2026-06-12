@@ -7,9 +7,13 @@ class Zombie : public Entity
 {
 protected:
     float speed;
+    float baseSpeed;
     int damage;
     float attackTimer;
     float attackCooldown;
+
+    bool isSlowed;
+    float slowTimer;
 
     sf::RectangleShape shape;
 
@@ -19,6 +23,8 @@ public:
     virtual void attack();
 
     void move(float dt);
+
+    void applySlow(float duration);
 
     void update(float dt) override;
     void draw(sf::RenderWindow& window) override;

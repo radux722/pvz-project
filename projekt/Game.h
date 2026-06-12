@@ -16,10 +16,12 @@ private:
     sf::RectangleShape peashooterButton;
     sf::RectangleShape sunflowerButton;
     sf::RectangleShape wallnutButton;
+    sf::RectangleShape snowpeaButton;
 
     sf::Text peashooterText;
     sf::Text sunflowerText;
     sf::Text wallnutText;
+    sf::Text snowpeaText;
 
     sf::Text waveText;
     sf::Text gameOverText;

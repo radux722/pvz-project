@@ -5,6 +5,7 @@ BasicZombie::BasicZombie(float x, float y)
 {
     health = 120;
     speed = 25.f;
+    baseSpeed = 25.f;
     damage = 100;
     attackCooldown = 1.f;
 

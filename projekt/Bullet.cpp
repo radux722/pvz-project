@@ -1,9 +1,16 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y)
+Bullet::Bullet(float x, float y, bool freezing):isFreezing(freezing)
 {
 	shape.setRadius(8.f);
-	shape.setFillColor(sf::Color::Cyan);
+	if (isFreezing)
+	{
+		shape.setFillColor(sf::Color::Blue);
+	}
+	else
+	{
+		shape.setFillColor(sf::Color::Cyan);
+	}
 	shape.setPosition(x, y);
 
 	speed = 400.f;
@@ -28,4 +35,9 @@ sf::FloatRect Bullet::getBounds() const
 int Bullet::getDamage() const
 {
 	return damage;
+}
+
+bool Bullet::getIsFreezing() const
+{
+	return isFreezing;  
 }

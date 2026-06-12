@@ -5,6 +5,7 @@ FastZombie::FastZombie(float x, float y)
 {
     health = 70; 
     speed = 40.f;
+    baseSpeed = 40.f;
     damage = 80;
 
     attackCooldown = 0.8f;

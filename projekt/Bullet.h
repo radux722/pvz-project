@@ -9,13 +9,15 @@ private:
 
 	float speed;
 	int damage;
+	bool isFreezing;
 
 public:
-	Bullet(float x, float y);
+	Bullet(float x, float y, bool freezing = false);
 	
 	void update(float dt);
 	void draw(sf::RenderWindow& window);
 
 	sf::FloatRect getBounds() const;
 	int getDamage() const;
+	bool getIsFreezing() const;
 };

@@ -1,8 +1,11 @@
 #include "World.h"
 #include "BasicZombie.h"
 #include "Peashooter.h"
+#include "SnowPea.h"
 #include "Sunflower.h"
 #include "Wallnut.h"
+#include "TankZombie.h"
+#include "BossZombie.h"
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -117,6 +120,33 @@ void World::update(float dt)
                 )
             );
             peashooter->resetShootTimer();
+        }
+    }
+
+    for (auto& plant : plants)
+    {
+        SnowPea* snowpea = dynamic_cast<SnowPea*>(plant.get());
+        if (!snowpea) continue;
+
+        bool zombieInRow = false;
+        for (auto& zombie : zombies)
+        {
+            if (std::abs(zombie->getBounds().top - snowpea->getBounds().top) < 100.f)
+            {
+                zombieInRow = true;
+                break;
+            }
+        }
+
+        if (zombieInRow && snowpea->canShoot())
+        {
+            sf::FloatRect bounds = snowpea->getBounds();
+            bullets.push_back(std::make_unique<Bullet>(
+                bounds.left + bounds.width,
+                bounds.top + bounds.height / 2.f,
+                true
+            ));
+            snowpea->resetShootTimer();
         }
     }
 
@@ -262,6 +292,15 @@ void World::spawnZombie()
                 )
             );
         }
+        else if (chance < 40)
+        {
+            zombies.push_back(
+                std::make_unique<TankZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
         else
         {
             zombies.push_back(
@@ -274,10 +313,28 @@ void World::spawnZombie()
     }
     else
     {
-        if (chance < 40)
+        if (chance < 10)
+        {
+            zombies.push_back(
+                std::make_unique<BossZombie>(
+                    spawnX,
+                    spawnY - 20.f
+                )
+            );
+        }
+        else if (chance < 35)
         {
             zombies.push_back(
                 std::make_unique<FastZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
+        else if (chance < 60)
+        {
+            zombies.push_back(
+                std::make_unique<TankZombie>(
                     spawnX,
                     spawnY
                 )
@@ -310,6 +367,11 @@ void World::checkCollisions()
                 zombie->takeDamage(
                     (*bulletIt)->getDamage()
                 );
+
+                if ((*bulletIt)->getIsFreezing())
+                {
+                    zombie->applySlow(3.0f);
+                }
 
                 bulletDestroyed = true;
                 break;
@@ -367,6 +429,10 @@ void World::placePlant(int row, int col, PlantType type)
     case PlantType::Wallnut:
         cost = 50;
         break;
+
+    case PlantType::SnowPea:
+        cost = 175;
+        break;
     }
 
     // Za mało słońca
@@ -415,6 +481,13 @@ void World::placePlant(int row, int col, PlantType type)
 
         plants.push_back(std::move(wall));
 
+        break;
+    }
+    case PlantType::SnowPea:
+    {
+        auto snow = std::make_unique<SnowPea>(pos.x, pos.y);
+        snow->setGridPosition(row, col);
+        plants.push_back(std::move(snow));
         break;
     }
     }

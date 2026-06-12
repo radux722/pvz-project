@@ -147,6 +147,7 @@ sfml-window-d.lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicZombie.cpp" />
+    <ClCompile Include="BossZombie.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FastZombie.cpp" />
@@ -155,13 +156,16 @@ sfml-window-d.lib
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Peashooter.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="SnowPea.cpp" />
     <ClCompile Include="Sunflower.cpp" />
+    <ClCompile Include="TankZombie.cpp" />
     <ClCompile Include="Wallnut.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicZombie.h" />
+    <ClInclude Include="BossZombie.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FastZombie.h" />
@@ -169,7 +173,9 @@ sfml-window-d.lib
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Peashooter.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="SnowPea.h" />
     <ClInclude Include="Sunflower.h" />
+    <ClInclude Include="TankZombie.h" />
     <ClInclude Include="Wallnut.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Zombie.h" />

@@ -3,13 +3,24 @@
 Zombie::Zombie(float x, float y)
     : Entity(x, y, 100),
     speed(25.f),
+    baseSpeed(25.f),
     damage(100),
     attackTimer(0.f),
-    attackCooldown(1.f)
+    attackCooldown(1.f),
+    isSlowed(false),
+    slowTimer(0.f)
 {
     shape.setSize(sf::Vector2f(60.f, 60.f));
     shape.setFillColor(sf::Color::Red);
     shape.setPosition(position);
+}
+
+void Zombie::applySlow(float duration)
+{
+    isSlowed = true;
+    slowTimer = duration;
+    speed = baseSpeed * 0.5f;
+    shape.setFillColor(sf::Color(100, 100, 255));
 }
 
 void Zombie::attack()
@@ -24,6 +35,16 @@ void Zombie::move(float dt)
 
 void Zombie::update(float dt)
 {
+    if (isSlowed)
+    {
+        slowTimer -= dt;
+        if (slowTimer <= 0.f)
+        {
+            isSlowed = false;
+            speed = baseSpeed;
+            shape.setFillColor(sf::Color::Red);
+        }
+    }
     move(dt);
 }
 
