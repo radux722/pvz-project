@@ -49,7 +49,9 @@ void World::update(float dt)
     waveTimer += dt/2;
     spawnTimer += dt;
 
-    if (zombiesToSpawn > 0 && spawnTimer >= 2.f)
+    float currentSpawnInterval = std::max(0.6f, 2.5f - (currentWave * 0.2f));
+
+    if (zombiesToSpawn > 0 && spawnTimer >= currentSpawnInterval)
     {
         spawnZombie();
 
@@ -68,7 +70,7 @@ void World::update(float dt)
         }
         else
         {
-            zombiesToSpawn = currentWave + 4;
+            zombiesToSpawn = 4 + (currentWave * 2) + (currentWave * currentWave / 3);
         }
     }
 
@@ -272,7 +274,7 @@ void World::spawnZombie()
     }
 
     // Wybór typu zombie zależnie od fali
-    if (currentWave < 3)
+    if (currentWave <= 2)
     {
         zombies.push_back(
             std::make_unique<BasicZombie>(
@@ -281,9 +283,9 @@ void World::spawnZombie()
             )
         );
     }
-    else if (currentWave < 5)
+    else if (currentWave <= 4)
     {
-        if (chance < 20)
+        if (chance < 30)
         {
             zombies.push_back(
                 std::make_unique<FastZombie>(
@@ -292,7 +294,7 @@ void World::spawnZombie()
                 )
             );
         }
-        else if (chance < 40)
+        else if (chance < 50)
         {
             zombies.push_back(
                 std::make_unique<TankZombie>(
@@ -311,7 +313,7 @@ void World::spawnZombie()
             );
         }
     }
-    else
+    else if (currentWave <= 7)
     {
         if (chance < 10)
         {
@@ -322,7 +324,16 @@ void World::spawnZombie()
                 )
             );
         }
-        else if (chance < 35)
+        else if (chance < 40)
+        {
+            zombies.push_back(
+                std::make_unique<TankZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
+        else if (chance < 70)
         {
             zombies.push_back(
                 std::make_unique<FastZombie>(
@@ -331,10 +342,41 @@ void World::spawnZombie()
                 )
             );
         }
-        else if (chance < 60)
+        else
+        {
+            zombies.push_back(
+                std::make_unique<BasicZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
+    }
+    else
+    {
+        if (chance < 25)
+        {
+            zombies.push_back(
+                std::make_unique<BossZombie>(
+                    spawnX,
+                    spawnY - 20.f
+                )
+            );
+        }
+        else if (chance < 65)
         {
             zombies.push_back(
                 std::make_unique<TankZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+
+        }
+        else if (chance < 90)
+        {
+            zombies.push_back(
+                std::make_unique<FastZombie>(
                     spawnX,
                     spawnY
                 )
