@@ -40,6 +40,10 @@ private:
     bool gameOver;
     bool gameWon;
 
+    int plantsPlaced;
+    int totalSunCollected;
+    float playTime;
+
 public:
     World();
 
@@ -68,5 +72,9 @@ public:
     // zapisywanie i wczytywanie
     void saveGame(const std::string& filename);
     void loadGame(const std::string& filename);
+
+    int getPlantsPlaced() const;
+    int getTotalSunCollected() const;
+    float getPlayTime() const;
 
 };

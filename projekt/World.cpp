@@ -18,6 +18,9 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     sunPoints = 200;
     gameOver = false;
     gameWon = false;
+    plantsPlaced = 0;
+    totalSunCollected = 0;
+    playTime = 0.f;
 
     /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
@@ -39,6 +42,7 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
 void World::update(float dt)
 {
     // logika fal i spawn zombie co 2 sek
+    playTime += dt;
     waveTimer += dt/2;
     spawnTimer += dt;
 
@@ -67,14 +71,6 @@ void World::update(float dt)
 
     
     zombieSpawnTimer += dt;
-
-    
-
-    /*if (zombieSpawnTimer >= 3.f)
-    {
-        spawnZombie();
-        zombieSpawnTimer = 0.f;
-    }*/
     
 
     for (auto& plant : plants)
@@ -95,9 +91,6 @@ void World::update(float dt)
         bool zombieInRow = false;
         for (auto& zombie : zombies)
         {
-            /*std::cout << "Zombie: " << zombie->getBounds().top
-                << " Plant: " << peashooter->getBounds().top
-                << std::endl;*/
 
             if (std::abs(
                 zombie->getBounds().top -
@@ -135,6 +128,7 @@ void World::update(float dt)
         if (sunflower && sunflower->canProduceSun())
         {
             sunPoints += 25; //addSunPoints(25)
+            totalSunCollected += 25;
         }
     }
 
@@ -227,16 +221,33 @@ void World::spawnZombie()
         440.f,
         560.f
     };
-    int randomRow = std::rand() % 5;
 
+    int randomRow = std::rand() % 5;
     int chance = std::rand() % 100;
 
+    float spawnY = rows[randomRow];
+    float spawnX = 1100.f;
+
+    // Sprawdzenie, czy w tym rzędzie są już zombie.
+    // Jeśli tak, nowe zombie pojawi się za ostatnim.
+    for (auto& zombie : zombies)
+    {
+        if (std::abs(zombie->getBounds().top - spawnY) < 50.f)
+        {
+            spawnX = std::max(
+                spawnX,
+                zombie->getBounds().left + 120.f
+            );
+        }
+    }
+
+    // Wybór typu zombie zależnie od fali
     if (currentWave < 3)
     {
         zombies.push_back(
             std::make_unique<BasicZombie>(
-                1100.f,
-                rows[randomRow]
+                spawnX,
+                spawnY
             )
         );
     }
@@ -246,8 +257,8 @@ void World::spawnZombie()
         {
             zombies.push_back(
                 std::make_unique<FastZombie>(
-                    1100.f,
-                    rows[randomRow]
+                    spawnX,
+                    spawnY
                 )
             );
         }
@@ -255,8 +266,8 @@ void World::spawnZombie()
         {
             zombies.push_back(
                 std::make_unique<BasicZombie>(
-                    1100.f,
-                    rows[randomRow]
+                    spawnX,
+                    spawnY
                 )
             );
         }
@@ -267,8 +278,8 @@ void World::spawnZombie()
         {
             zombies.push_back(
                 std::make_unique<FastZombie>(
-                    1100.f,
-                    rows[randomRow]
+                    spawnX,
+                    spawnY
                 )
             );
         }
@@ -276,35 +287,12 @@ void World::spawnZombie()
         {
             zombies.push_back(
                 std::make_unique<BasicZombie>(
-                    1100.f,
-                    rows[randomRow]
+                    spawnX,
+                    spawnY
                 )
             );
         }
     }
-
-
-
-
-    /*const float rows[5] =
-    {
-        80.f,
-        200.f,
-        320.f,
-        440.f,
-        560.f
-    };
-
-    int randomRow = std::rand() % 5;
-
-    zombies.push_back(
-        std::make_unique<BasicZombie>(
-            1100.f,
-            rows[randomRow]
-        )
-    );*/
-
-
 }
 
 void World::checkCollisions()
@@ -432,6 +420,7 @@ void World::placePlant(int row, int col, PlantType type)
     }
 
     sunPoints -= cost;
+    plantsPlaced++;
 }
 
 
@@ -551,4 +540,19 @@ bool World::isGameOver() const
 bool World::isGameWon() const
 {
     return gameWon;
+}
+
+int World::getPlantsPlaced() const
+{
+    return plantsPlaced;
+}
+
+int World::getTotalSunCollected() const
+{
+    return totalSunCollected;
+}
+
+float World::getPlayTime() const
+{
+    return playTime;
 }

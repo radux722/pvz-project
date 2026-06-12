@@ -42,8 +42,14 @@ private:
 
     sf::RectangleShape saveButton;
     sf::RectangleShape loadButtonGame;
+    sf::RectangleShape pauseButton;
     sf::Text saveText;
     sf::Text loadGameText;
+    sf::Text pauseText;
+
+    sf::Text pausedText;
+
+    sf::Text statisticsText;
 
     World world;
 

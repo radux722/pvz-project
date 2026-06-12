@@ -68,6 +68,12 @@ Game::Game()
     gameOverText.setString("GAME OVER");
     gameOverText.setPosition(350.f, 300.f);
 
+    // statystki
+    statisticsText.setFont(font);
+    statisticsText.setCharacterSize(30);
+    statisticsText.setFillColor(sf::Color::White);
+    statisticsText.setPosition(350.f, 380.f);
+
     // game won
     winText.setFont(font);
     winText.setCharacterSize(72);
@@ -112,7 +118,7 @@ Game::Game()
     exitText.setCharacterSize(40);
     exitText.setPosition(600.f, 515.f);
 
-    // save and load
+    // save and load 
     saveButton.setSize({ 120.f, 50.f });
     saveButton.setPosition(1100.f, 10.f);
     saveButton.setFillColor(sf::Color(80, 80, 200));
@@ -130,6 +136,23 @@ Game::Game()
     loadGameText.setString("LOAD");
     loadGameText.setCharacterSize(24);
     loadGameText.setPosition(1125.f, 80.f);
+
+    // pauza
+    pauseButton.setSize({ 120.f, 50.f });
+    pauseButton.setPosition(1100.f, 130.f);
+    pauseButton.setFillColor(sf::Color(200, 140, 60));
+
+    pauseText.setFont(font);
+    pauseText.setString("PAUSE");
+    pauseText.setCharacterSize(24);
+    pauseText.setFillColor(sf::Color::White);
+    pauseText.setPosition(1110.f, 140.f);
+
+    pausedText.setFont(font);
+    pausedText.setCharacterSize(72);
+    pausedText.setFillColor(sf::Color::White);
+    pausedText.setString("PAUSED");
+    pausedText.setPosition(350.f, 300.f);
 
 
 
@@ -182,7 +205,7 @@ void Game::run()
                     continue;
                 }
 
-                // ================= SAVE / LOAD W TRAKCIE GRY =================
+                // ================= SAVE / LOAD W TRAKCIE GRY / PAUZA =================
                 if (saveButton.getGlobalBounds().contains(mousePos))
                 {
                     world.saveGame("save.txt");
@@ -194,6 +217,12 @@ void Game::run()
                 {
                     world.loadGame("save.txt");
                     std::cout << "Wczytano gre!\n";
+                    continue;
+                }
+
+                if (pauseButton.getGlobalBounds().contains(mousePos))
+                {
+                    paused = !paused;
                     continue;
                 }
 
@@ -243,6 +272,16 @@ void Game::run()
 
                 if (event.key.code == sf::Keyboard::Num3)
                     selectedPlant = PlantType::Wallnut;
+
+                if (world.isGameOver() || world.isGameWon())
+                {
+                    world = World();
+
+                    state = GameState::MainMenu;
+
+                    paused = false;
+                }
+
             }
         }
 
@@ -256,6 +295,15 @@ void Game::run()
 
 void Game::update(float dt)
 {
+    if (paused)
+    {
+        pauseText.setString("RESUME");
+    }
+    else
+    {
+        pauseText.setString("PAUSE");
+    }
+
     // licznik smierci
     killText.setString("Zombie kills: " + std::to_string(world.getZombieKills()));
     
@@ -288,6 +336,36 @@ void Game::update(float dt)
         "Wave: " +
         std::to_string(world.getCurrentWave())
     );
+
+    if (world.isGameOver() || world.isGameWon())
+    {
+        int minutes =
+            static_cast<int>(world.getPlayTime()) / 60;
+
+        int seconds =
+            static_cast<int>(world.getPlayTime()) % 60;
+
+        statisticsText.setString(
+            "Zombie kills: " +
+            std::to_string(world.getZombieKills()) +
+
+            "\nWaves survived: " +
+            std::to_string(world.getCurrentWave()) +
+
+            "\nPlants placed: " +
+            std::to_string(world.getPlantsPlaced()) +
+
+            "\nSun collected: " +
+            std::to_string(world.getTotalSunCollected()) +
+
+            "\nPlay time: " +
+            std::to_string(minutes) + ":" +
+            (seconds < 10 ? "0" : "") +
+            std::to_string(seconds) +
+
+            "\n\nPress ENTER to return to menu"
+        );
+    }
 
     world.update(dt);
 }
@@ -329,24 +407,35 @@ void Game::render()
     window.draw(sunflowerText);
     window.draw(wallnutText);
 
+    
+
     // save and load
     window.draw(saveButton);
     window.draw(saveText);
 
     window.draw(loadButtonGame);
     window.draw(loadGameText);
+
+
+
+    // pauza
+    window.draw(pauseButton);
+    window.draw(pauseText);
     
-    if (world.isGameOver())
-    {
-        window.draw(gameOverText);
-    }
+    
 
     if (world.isGameWon())
     {
         window.draw(winText);
+        window.draw(statisticsText);
     }
 
+    if (paused)
+    {
+        window.draw(pausedText);
+    }
 
+   
 
     window.display();
 
