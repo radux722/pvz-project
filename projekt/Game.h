@@ -32,6 +32,12 @@ private:
     sf::Text shovelText;
     bool isShovelSelected;
 
+    //cooldown
+    float peashooterCooldown;
+    float sunflowerCooldown;
+    float wallnutCooldown;
+    float snowpeaCooldown;
+
     enum class GameState // menu
     {
         MainMenu,

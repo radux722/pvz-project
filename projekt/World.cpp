@@ -454,7 +454,7 @@ int World::getZombieKills() const
 }
 
 
-void World::placePlant(int row, int col, PlantType type)
+bool World::placePlant(int row, int col, PlantType type)
 {
     int cost = 0;
 
@@ -480,13 +480,13 @@ void World::placePlant(int row, int col, PlantType type)
     // Za mało słońca
     if (sunPoints < cost)
     {
-        return;
+        return false;
     }
 
     // Pole zajęte
     if (!grid.placePlant(row, col))
     {
-        return;
+        return false;
     }
 
     sf::Vector2f pos = grid.getCellPosition(row, col);
@@ -536,6 +536,8 @@ void World::placePlant(int row, int col, PlantType type)
 
     sunPoints -= cost;
     plantsPlaced++;
+
+    return true;
 }
 
 

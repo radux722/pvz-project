@@ -182,6 +182,12 @@ Game::Game()
 
     isShovelSelected = false;
 
+    //zerowanie cooldownu
+    peashooterCooldown = 0.f;
+    sunflowerCooldown = 0.f;
+    wallnutCooldown = 0.f;
+    snowpeaCooldown = 0.f;
+
 }
 
 void Game::run()
@@ -298,15 +304,32 @@ void Game::run()
                     if (isShovelSelected)
                     {
                         world.removePlantAt(row, col);
-                        isShovelSelected = false; // Po wykopaniu odznacz łopatę
+                        isShovelSelected = false; // Po wykopaniu odznacz lopate
                     }
                     else
                     {
-                        world.placePlant(row, col, selectedPlant);
+                        // spr czy jest cooldown
+                        bool canPlace = false;
+                        if (selectedPlant == PlantType::Peashooter && peashooterCooldown <= 0.f) canPlace = true;
+                        if (selectedPlant == PlantType::Sunflower && sunflowerCooldown <= 0.f) canPlace = true;
+                        if (selectedPlant == PlantType::Wallnut && wallnutCooldown <= 0.f) canPlace = true;
+                        if (selectedPlant == PlantType::SnowPea && snowpeaCooldown <= 0.f) canPlace = true;
+
+                        // jesli nie ma szadzimy
+                        if (canPlace)
+                        {
+                            // jesli jest miejsce i slonce to sadzi
+                            if (world.placePlant(row, col, selectedPlant))
+                            {
+                                if (selectedPlant == PlantType::Peashooter) peashooterCooldown = 2.5f;
+                                if (selectedPlant == PlantType::Sunflower) sunflowerCooldown = 2.5f;
+                                if (selectedPlant == PlantType::Wallnut) wallnutCooldown = 2.5f;
+                                if (selectedPlant == PlantType::SnowPea) snowpeaCooldown = 2.5f;
+                            }
+                        }
                     }
                 }
             }
-
 
             if (event.type == sf::Event::KeyPressed)
             {
@@ -334,7 +357,7 @@ void Game::run()
                     paused = false;
                 }
 
-                //przycisk do lopaty na klawiaturze
+                //zmienia stan lopaty na wylaczona
                 if (event.key.code == sf::Keyboard::Num1) {
                     selectedPlant = PlantType::Peashooter;
                     isShovelSelected = false;
@@ -454,6 +477,26 @@ void Game::update(float dt)
         "Wave: " +
         std::to_string(world.getCurrentWave())
     );
+
+    // Odliczanie cooldownu
+    if (peashooterCooldown > 0.f) peashooterCooldown -= dt;
+    if (sunflowerCooldown > 0.f) sunflowerCooldown -= dt;
+    if (wallnutCooldown > 0.f) wallnutCooldown -= dt;
+    if (snowpeaCooldown > 0.f) snowpeaCooldown -= dt;
+
+    // cooldown kolor na ciemniejszy
+    if (peashooterCooldown > 0.f) peashooterButton.setFillColor(sf::Color(80, 120, 80));
+    else peashooterButton.setFillColor(sf::Color(100, 200, 100)); //zielony
+
+    if (sunflowerCooldown > 0.f) sunflowerButton.setFillColor(sf::Color(140, 140, 80));
+    else sunflowerButton.setFillColor(sf::Color(220, 220, 100)); //zolty
+
+    if (wallnutCooldown > 0.f) wallnutButton.setFillColor(sf::Color(110, 80, 50));
+    else wallnutButton.setFillColor(sf::Color(160, 100, 50)); //brazowy
+
+    if (snowpeaCooldown > 0.f) snowpeaButton.setFillColor(sf::Color(80, 100, 150));
+    else snowpeaButton.setFillColor(sf::Color(100, 150, 255)); //niebieski
+
 }
 
 void Game::render()
