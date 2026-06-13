@@ -18,6 +18,7 @@ Game::Game()
     {
         std::cout << "Czcionka zaladowana" << std::endl;
     }
+
     killText.setFont(font);
     killText.setCharacterSize(28);
     killText.setFillColor(sf::Color::White);
@@ -169,12 +170,6 @@ Game::Game()
 
 
 
-
-    // ustawienie lopaty
-    shovelButton.setSize(sf::Vector2f(150.f, 60.f));
-    shovelButton.setPosition(1100.f, 640.f);
-    shovelButton.setFillColor(sf::Color(150, 50, 50));
-
     shovelText.setFont(font);
     shovelText.setCharacterSize(20);
     shovelText.setString("Shovel");
@@ -187,6 +182,22 @@ Game::Game()
     sunflowerCooldown = 0.f;
     wallnutCooldown = 0.f;
     snowpeaCooldown = 0.f;
+
+    // textury tla i lopaty
+    if (backgroundTexture.loadFromFile("ground.png")) {
+        backgroundSprite.setTexture(backgroundTexture);
+        sf::FloatRect bounds = backgroundSprite.getLocalBounds();
+        backgroundSprite.setScale(1280.f / bounds.width, 720.f / bounds.height);
+    }
+
+    if (shovelTexture.loadFromFile("shovel.png")) {
+        shovelSprite.setTexture(shovelTexture);
+
+        sf::FloatRect bounds = shovelSprite.getLocalBounds();
+        shovelSprite.setScale(100.f / bounds.width, 100.f / bounds.height);
+
+        shovelSprite.setPosition(1120.f, 550.f);
+    }
 
 }
 
@@ -257,7 +268,7 @@ void Game::run()
                 }
 
                 // ================= GUI ROŚLIN =================
-                if (shovelButton.getGlobalBounds().contains(mousePos))
+                if (shovelSprite.getGlobalBounds().contains(mousePos))
                 {
                     isShovelSelected = true;
                     continue;
@@ -403,12 +414,11 @@ void Game::update(float dt)
     sunflowerButton.setOutlineThickness(0);
     wallnutButton.setOutlineThickness(0);
     snowpeaButton.setOutlineThickness(0);
-    shovelButton.setOutlineThickness(0);
+    shovelSprite.setColor(sf::Color::White);
 
     if (isShovelSelected)
     {
-        shovelButton.setOutlineThickness(3);
-        shovelButton.setOutlineColor(sf::Color::White);
+        shovelSprite.setColor(sf::Color(255, 255, 255, 128));
     }
     else
     {
@@ -505,7 +515,8 @@ void Game::render()
     if (state == GameState::MainMenu)
     {
         window.clear(sf::Color(30, 120, 30));
-
+        window.draw(backgroundSprite);
+        world.draw(window);
         window.draw(titleText);
 
         window.draw(startButton);
@@ -516,12 +527,13 @@ void Game::render()
         window.draw(loadText);
         window.draw(exitText);
 
+
         window.display();
         return;
     }
 
     window.clear(sf::Color(30, 120, 30));
-
+    window.draw(backgroundSprite);
     world.draw(window);
 
     window.draw(sunText);
@@ -539,7 +551,7 @@ void Game::render()
     window.draw(snowpeaText);
 
     // Rysowanie łopaty
-    window.draw(shovelButton);
+    window.draw(shovelSprite);
     window.draw(shovelText);
 
     // save and load

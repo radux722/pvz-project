@@ -7,7 +7,17 @@ Peashooter::Peashooter(float x, float y)
     cost = 100;
     attackSpeed = 1.5;
 
-    shape.setFillColor(sf::Color::Blue);
+    if (texture.loadFromFile("peashooter.png")) {
+        sprite.setTexture(texture);
+
+        //orginalny rozmiar
+        sf::FloatRect bounds = sprite.getLocalBounds();
+
+        // zmienia obrazek 85x85
+        sprite.setScale(85.f / bounds.width, 85.f / bounds.height);
+
+        sprite.setPosition(position);
+    }
 }
 
 void Peashooter::attack()

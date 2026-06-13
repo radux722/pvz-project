@@ -18,7 +18,8 @@ protected:
     int row;
     int col;
 
-    sf::RectangleShape shape;
+    sf::Texture texture;
+    sf::Sprite sprite;
 
 public:
     Plant(float x, float y);

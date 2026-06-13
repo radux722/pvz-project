@@ -15,7 +15,9 @@ protected:
     bool isSlowed;
     float slowTimer;
 
-    sf::RectangleShape shape;
+    sf::Texture textureNormal;
+    sf::Texture textureFrozen;
+    sf::Sprite sprite;
 
 public:
     Zombie(float x, float y);

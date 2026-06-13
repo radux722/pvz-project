@@ -2,16 +2,20 @@
 
 Bullet::Bullet(float x, float y, bool freezing):isFreezing(freezing)
 {
-	shape.setRadius(8.f);
 	if (isFreezing)
 	{
-		shape.setFillColor(sf::Color::Blue);
+		texture.loadFromFile("bullet_snow.png");
 	}
 	else
 	{
-		shape.setFillColor(sf::Color::Cyan);
+		texture.loadFromFile("bullet.png");
 	}
-	shape.setPosition(x, y);
+	sprite.setTexture(texture);
+
+	sf::FloatRect bounds = sprite.getLocalBounds();
+	sprite.setScale(25.f / bounds.width, 25.f / bounds.height);
+
+	sprite.setPosition(x, y);
 
 	speed = 400.f;
 	damage = 20;
@@ -19,17 +23,17 @@ Bullet::Bullet(float x, float y, bool freezing):isFreezing(freezing)
 
 void Bullet::update(float dt)
 {
-	shape.move(speed * dt, 0.f);
+	sprite.move(speed * dt, 0.f);
 }
 
 void Bullet::draw(sf::RenderWindow& window)
 {
-	window.draw(shape);
+	window.draw(sprite);
 }
 
 sf::FloatRect Bullet::getBounds() const
 {
-	return shape.getGlobalBounds();
+	return sprite.getGlobalBounds();
 }
 
 int Bullet::getDamage() const

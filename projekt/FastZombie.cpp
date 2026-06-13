@@ -10,5 +10,16 @@ FastZombie::FastZombie(float x, float y)
 
     attackCooldown = 0.8f;
 
-    shape.setFillColor(sf::Color::Magenta);
+    textureNormal.loadFromFile("fast_zombie.png");
+    textureFrozen.loadFromFile("fast_zombie_frozen.png");
+
+    sprite.setTexture(textureNormal);
+
+    //orginalny rozmiar
+    sf::FloatRect bounds = sprite.getLocalBounds();
+
+    // zmienia obrazek 85x85
+    sprite.setScale(100.f / bounds.width, 100.f / bounds.height);
+
+    sprite.setPosition(position);
 }

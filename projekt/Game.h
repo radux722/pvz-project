@@ -27,8 +27,12 @@ private:
     sf::Text gameOverText;
     sf::Text winText;
 
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
+
     //lopata
-    sf::RectangleShape shovelButton;
+    sf::Texture shovelTexture;
+    sf::Sprite shovelSprite;
     sf::Text shovelText;
     bool isShovelSelected;
 

@@ -7,9 +7,7 @@ Plant::Plant(float x, float y)
     attackSpeed(1.f),
     health(100)
 {
-    shape.setSize(sf::Vector2f(60.f, 60.f));
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition(position);
+
 }
 
 void Plant::update(float dt)
@@ -18,12 +16,12 @@ void Plant::update(float dt)
 
 void Plant::draw(sf::RenderWindow& window)
 {
-    window.draw(shape);
+    window.draw(sprite);
 }
 
 sf::FloatRect Plant::getBounds() const
 {
-    return shape.getGlobalBounds();
+    return sprite.getGlobalBounds();
 }
 
 void Plant::takeDamage(int damage)

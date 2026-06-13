@@ -8,7 +8,16 @@ BossZombie::BossZombie(float x, float y) :Zombie(x, y)
 	damage = 300;
 	attackCooldown = 1.5f;
 
-	shape.setSize(sf::Vector2f(80.f, 80.f));
+	textureNormal.loadFromFile("boss_zombie.png");
+	textureFrozen.loadFromFile("boss_zombie_frozen.png");
 
-	shape.setFillColor(sf::Color::Black);
+	sprite.setTexture(textureNormal);
+
+	//orginalny rozmiar
+	sf::FloatRect bounds = sprite.getLocalBounds();
+
+
+	sprite.setScale(150.f / bounds.width, 150.f / bounds.height);
+
+	sprite.setPosition(position);
 }

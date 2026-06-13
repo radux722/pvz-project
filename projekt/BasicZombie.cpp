@@ -9,5 +9,16 @@ BasicZombie::BasicZombie(float x, float y)
     damage = 100;
     attackCooldown = 1.f;
 
-    shape.setFillColor(sf::Color::Red);
+    textureNormal.loadFromFile("basic_zombie.png");
+    textureFrozen.loadFromFile("basic_zombie_frozen.png");
+
+    sprite.setTexture(textureNormal);
+
+    //orginalny rozmiar
+    sf::FloatRect bounds = sprite.getLocalBounds();
+
+
+    sprite.setScale(100.f / bounds.width, 100.f / bounds.height);
+
+    sprite.setPosition(position);
 }

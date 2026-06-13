@@ -10,9 +10,7 @@ Zombie::Zombie(float x, float y)
     isSlowed(false),
     slowTimer(0.f)
 {
-    shape.setSize(sf::Vector2f(60.f, 60.f));
-    shape.setFillColor(sf::Color::Red);
-    shape.setPosition(position);
+    sprite.setPosition(position);
 }
 
 void Zombie::applySlow(float duration)
@@ -20,7 +18,7 @@ void Zombie::applySlow(float duration)
     isSlowed = true;
     slowTimer = duration;
     speed = baseSpeed * 0.5f;
-    shape.setFillColor(sf::Color(100, 100, 255));
+    sprite.setTexture(textureFrozen);
 }
 
 void Zombie::attack()
@@ -30,7 +28,7 @@ void Zombie::attack()
 void Zombie::move(float dt)
 {
     position.x -= speed * dt;
-    shape.setPosition(position);
+    sprite.setPosition(position);
 }
 
 void Zombie::update(float dt)
@@ -42,7 +40,7 @@ void Zombie::update(float dt)
         {
             isSlowed = false;
             speed = baseSpeed;
-            shape.setFillColor(sf::Color::Red);
+            sprite.setTexture(textureNormal);
         }
     }
     move(dt);
@@ -50,12 +48,12 @@ void Zombie::update(float dt)
 
 void Zombie::draw(sf::RenderWindow& window)
 {
-    window.draw(shape);
+    window.draw(sprite);
 }
 
 sf::FloatRect Zombie::getBounds() const
 {
-    return shape.getGlobalBounds();
+    return sprite.getGlobalBounds();
 }
 
 bool Zombie::isDead() const

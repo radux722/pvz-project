@@ -5,7 +5,8 @@
 class Bullet
 {
 private:
-	sf::CircleShape shape;
+	sf::Texture texture;
+	sf::Sprite sprite;
 
 	float speed;
 	int damage;
