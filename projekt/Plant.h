@@ -36,4 +36,7 @@ public:
     void setGridPosition(int r, int c);
     int getRow() const;
     int getCol() const;
+
+    //odczytywanie ceny punktow dla lopaty
+    int getCost() const;
 };

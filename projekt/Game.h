@@ -27,6 +27,11 @@ private:
     sf::Text gameOverText;
     sf::Text winText;
 
+    //lopata
+    sf::RectangleShape shovelButton;
+    sf::Text shovelText;
+    bool isShovelSelected;
+
     enum class GameState // menu
     {
         MainMenu,

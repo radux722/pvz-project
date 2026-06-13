@@ -53,3 +53,9 @@ int Plant::getCol() const
 {
     return col;
 }
+
+//odczytywanie ceny punktow dla lopaty
+int Plant::getCost() const
+{
+    return cost;
+}

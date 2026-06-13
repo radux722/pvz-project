@@ -166,6 +166,22 @@ Game::Game()
 
 
     //selectedPlant = PlantType::Peashooter;
+
+
+
+
+    // ustawienie lopaty
+    shovelButton.setSize(sf::Vector2f(150.f, 60.f));
+    shovelButton.setPosition(1100.f, 640.f);
+    shovelButton.setFillColor(sf::Color(150, 50, 50));
+
+    shovelText.setFont(font);
+    shovelText.setCharacterSize(20);
+    shovelText.setString("Shovel");
+    shovelText.setPosition(1140.f, 655.f);
+
+    isShovelSelected = false;
+
 }
 
 void Game::run()
@@ -236,31 +252,41 @@ void Game::run()
                 }
 
                 // ================= GUI ROŚLIN =================
-                if (peashooterButton.getGlobalBounds().contains(mousePos))
+                if (shovelButton.getGlobalBounds().contains(mousePos))
                 {
-                    selectedPlant = PlantType::Peashooter;
+                    isShovelSelected = true;
                     continue;
                 }
 
-                if (snowpeaButton.getGlobalBounds().contains(mousePos)) // <-- DODAJ TO
+                if (peashooterButton.getGlobalBounds().contains(mousePos))
+                {
+                    selectedPlant = PlantType::Peashooter;
+                    isShovelSelected = false;
+                    continue;
+                }
+
+                if (snowpeaButton.getGlobalBounds().contains(mousePos))
                 {
                     selectedPlant = PlantType::SnowPea;
+                    isShovelSelected = false;
                     continue;
                 }
 
                 if (sunflowerButton.getGlobalBounds().contains(mousePos))
                 {
                     selectedPlant = PlantType::Sunflower;
+                    isShovelSelected = false;
                     continue;
                 }
 
                 if (wallnutButton.getGlobalBounds().contains(mousePos))
                 {
                     selectedPlant = PlantType::Wallnut;
+                    isShovelSelected = false;
                     continue;
                 }
 
-                // ================= SADZENIE ROŚLIN =================
+                // ================= SADZENIE ROŚLIN / KOPANIE =================
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
                     int mouseX = event.mouseButton.x;
@@ -269,7 +295,15 @@ void Game::run()
                     int row = (mouseY - 80) / 120;
                     int col = mouseX / 120;
 
-                    world.placePlant(row, col, selectedPlant);
+                    if (isShovelSelected)
+                    {
+                        world.removePlantAt(row, col);
+                        isShovelSelected = false; // Po wykopaniu odznacz łopatę
+                    }
+                    else
+                    {
+                        world.placePlant(row, col, selectedPlant);
+                    }
                 }
             }
 
@@ -298,6 +332,12 @@ void Game::run()
                     state = GameState::MainMenu;
 
                     paused = false;
+                }
+
+                //przycisk do lopaty na klawiaturze
+                if (event.key.code == sf::Keyboard::Num1) {
+                    selectedPlant = PlantType::Peashooter;
+                    isShovelSelected = false;
                 }
 
             }
@@ -335,32 +375,42 @@ void Game::update(float dt)
     
     sunText.setString("Sun: " + std::to_string(world.getSunPoints()));
 
-    // podswietlanie wybranej rosliny
+    // podswietlanie wybranej rosliny lub lopaty
     peashooterButton.setOutlineThickness(0);
     sunflowerButton.setOutlineThickness(0);
     wallnutButton.setOutlineThickness(0);
     snowpeaButton.setOutlineThickness(0);
-    switch (selectedPlant)
+    shovelButton.setOutlineThickness(0);
+
+    if (isShovelSelected)
     {
-    case PlantType::Peashooter:
-        peashooterButton.setOutlineThickness(3);
-        peashooterButton.setOutlineColor(sf::Color::White);
-        break;
+        shovelButton.setOutlineThickness(3);
+        shovelButton.setOutlineColor(sf::Color::White);
+    }
+    else
+    {
+        switch (selectedPlant)
+        {
+        case PlantType::Peashooter:
+            peashooterButton.setOutlineThickness(3);
+            peashooterButton.setOutlineColor(sf::Color::White);
+            break;
 
-    case PlantType::Sunflower:
-        sunflowerButton.setOutlineThickness(3);
-        sunflowerButton.setOutlineColor(sf::Color::White);
-        break;
+        case PlantType::Sunflower:
+            sunflowerButton.setOutlineThickness(3);
+            sunflowerButton.setOutlineColor(sf::Color::White);
+            break;
 
-    case PlantType::Wallnut:
-        wallnutButton.setOutlineThickness(3);
-        wallnutButton.setOutlineColor(sf::Color::White);
-        break;
+        case PlantType::Wallnut:
+            wallnutButton.setOutlineThickness(3);
+            wallnutButton.setOutlineColor(sf::Color::White);
+            break;
 
-    case PlantType::SnowPea:
-        snowpeaButton.setOutlineThickness(3);
-        snowpeaButton.setOutlineColor(sf::Color::White);
-        break;
+        case PlantType::SnowPea:
+            snowpeaButton.setOutlineThickness(3);
+            snowpeaButton.setOutlineColor(sf::Color::White);
+            break;
+        }
     }
 
     // licznik fal
@@ -445,7 +495,9 @@ void Game::render()
     window.draw(wallnutText);
     window.draw(snowpeaText);
 
-    
+    // Rysowanie łopaty
+    window.draw(shovelButton);
+    window.draw(shovelText);
 
     // save and load
     window.draw(saveButton);

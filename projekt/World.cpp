@@ -671,3 +671,17 @@ float World::getPlayTime() const
 {
     return playTime;
 }
+
+//lopata - usuwanie rosliny
+void World::removePlantAt(int row, int col)
+{
+    for (auto& plant : plants)
+    {
+        if (plant->getRow() == row && plant->getCol() == col && !plant->isDead())
+        {
+            sunPoints += plant->getCost() / 2;
+            plant->takeDamage(9999);           
+            return;
+        }
+    }
+}

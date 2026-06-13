@@ -66,6 +66,9 @@ public:
     float spawnTimer;
     int getCurrentWave() const;
 
+    //lopata - usuwanie rosliny
+    void removePlantAt(int row, int col);
+
     bool isGameOver() const;
     bool isGameWon() const;
 
