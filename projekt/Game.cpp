@@ -209,10 +209,9 @@ void Game::run()
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                sf::Vector2f mousePos(
-                    static_cast<float>(event.mouseButton.x),
-                    static_cast<float>(event.mouseButton.y)
-                );
+                // zmiana pixeli ekranu na kordy w grze
+                sf::Vector2i pixelPos(event.mouseButton.x, event.mouseButton.y);
+                sf::Vector2f mousePos = window.mapPixelToCoords(pixelPos);
 
                 // ================= MENU GŁÓWNE =================
                 if (state == GameState::MainMenu)
@@ -298,8 +297,9 @@ void Game::run()
                     int mouseX = event.mouseButton.x;
                     int mouseY = event.mouseButton.y;
 
-                    int row = (mouseY - 80) / 120;
-                    int col = mouseX / 120;
+                    // sadzenie na podstawie mousepos
+                    int row = (static_cast<int>(mousePos.y) - 80) / 120;
+                    int col = static_cast<int>(mousePos.x) / 120;
 
                     if (isShovelSelected)
                     {
