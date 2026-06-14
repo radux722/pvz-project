@@ -4,11 +4,14 @@
 #include "SnowPea.h"
 #include "Sunflower.h"
 #include "Wallnut.h"
+#include "DoomShroom.h"
 #include "TankZombie.h"
 #include "BossZombie.h"
+#include "BerserkerZombie.h"
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include <iostream>
 #include <fstream>
 
@@ -164,6 +167,32 @@ void World::update(float dt)
         }
     }
 
+    for (auto& plant : plants)
+    {
+        DoomShroom* shroom = dynamic_cast<DoomShroom*>(plant.get());
+
+        if (shroom && shroom->shouldExplode())
+        {
+            sf::Vector2f center = shroom->getPosition();
+
+            for (auto& zombie : zombies)
+            {
+                sf::Vector2f zPos = zombie->getPosition();
+
+                float dx = center.x - zPos.x;
+                float dy = center.y - zPos.y;
+                float distance = std::sqrt(dx * dx + dy * dy);
+
+                if (distance <= 300.f)
+                {
+                    zombie->takeDamage(2000);
+                }
+            }
+
+            shroom->takeDamage(9999);
+        }
+    }
+
     for (auto& zombie : zombies)
     {
         bool blocked = false;
@@ -303,6 +332,15 @@ void World::spawnZombie()
                 )
             );
         }
+        else if (chance < 70)
+        {
+            zombies.push_back(
+                std::make_unique<BerserkerZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
         else
         {
             zombies.push_back(
@@ -328,6 +366,15 @@ void World::spawnZombie()
         {
             zombies.push_back(
                 std::make_unique<TankZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
+        }
+        else if (chance < 55)
+        {
+            zombies.push_back(
+                std::make_unique<BerserkerZombie>(
                     spawnX,
                     spawnY
                 )
@@ -363,7 +410,7 @@ void World::spawnZombie()
                 )
             );
         }
-        else if (chance < 65)
+        else if (chance < 55)
         {
             zombies.push_back(
                 std::make_unique<TankZombie>(
@@ -372,6 +419,15 @@ void World::spawnZombie()
                 )
             );
 
+        }
+        else if (chance < 75)
+        {
+            zombies.push_back(
+                std::make_unique<BerserkerZombie>(
+                    spawnX,
+                    spawnY
+                )
+            );
         }
         else if (chance < 90)
         {
@@ -475,6 +531,10 @@ bool World::placePlant(int row, int col, PlantType type)
     case PlantType::SnowPea:
         cost = 175;
         break;
+    
+    case PlantType::DoomShroom:
+        cost = 125;
+        break;
     }
 
     // Za mało słońca
@@ -532,6 +592,13 @@ bool World::placePlant(int row, int col, PlantType type)
         plants.push_back(std::move(snow));
         break;
     }
+    case PlantType::DoomShroom:
+    {
+        auto shroom = std::make_unique<DoomShroom>(pos.x, pos.y);
+        shroom->setGridPosition(row, col);
+        plants.push_back(std::move(shroom));
+        break;
+    }
     }
 
     sunPoints -= cost;
@@ -566,6 +633,8 @@ void World::saveGame(const std::string& filename)
             type = PlantType::Wallnut;
         else if (dynamic_cast<SnowPea*>(plant.get()))
             type = PlantType::SnowPea;
+        else if (dynamic_cast<DoomShroom*>(plant.get()))
+            type = PlantType::DoomShroom;
         else
             continue;
 
@@ -654,6 +723,13 @@ void World::loadGame(const std::string& filename)
             auto wall = std::make_unique<SnowPea>(pos.x, pos.y);
             wall->setGridPosition(row, col);
             plants.push_back(std::move(wall));
+            break;
+        }
+        case PlantType::DoomShroom:
+        {
+            auto doom = std::make_unique<DoomShroom>(pos.x, pos.y);
+            doom->setGridPosition(row, col);
+            plants.push_back(std::move(doom));
             break;
         }
         }

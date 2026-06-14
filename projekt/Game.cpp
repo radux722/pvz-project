@@ -47,6 +47,10 @@ Game::Game()
     snowpeaButton.setPosition(720.f, 10.f);
     snowpeaButton.setFillColor(sf::Color(100, 150, 255));
 
+    doomButton.setSize(sf::Vector2f(150.f, 60.f));
+    doomButton.setPosition(980.f, 10.f);
+    doomButton.setFillColor(sf::Color(80, 0, 80));
+
     peashooterText.setFont(font);
     peashooterText.setCharacterSize(20);
     peashooterText.setString("Pea (100)");
@@ -66,6 +70,11 @@ Game::Game()
     snowpeaText.setCharacterSize(20);
     snowpeaText.setString("Snow (175)");
     snowpeaText.setPosition(740.f, 25.f);
+
+    doomText.setFont(font);
+    doomText.setCharacterSize(20);
+    doomText.setString("Doom (125)");
+    doomText.setPosition(995.f, 25.f);
 
     // fale zombie
     waveText.setFont(font);
@@ -197,6 +206,7 @@ Game::Game()
     sunflowerCooldown = 0.f;
     wallnutCooldown = 0.f;
     snowpeaCooldown = 0.f;
+    doomCooldown = 0.f;
 
     // textury tla i lopaty
     if (backgroundTexture.loadFromFile("ground.png")) {
@@ -339,6 +349,12 @@ void Game::run()
                     continue;
                 }
 
+                if (doomButton.getGlobalBounds().contains(mousePos))
+                {
+                    selectedPlant = PlantType::DoomShroom;
+                    continue;
+                }
+
                 // ================= SADZENIE ROŚLIN / KOPANIE =================
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
@@ -366,6 +382,7 @@ void Game::run()
                         if (selectedPlant == PlantType::Sunflower && sunflowerCooldown <= 0.f) canPlace = true;
                         if (selectedPlant == PlantType::Wallnut && wallnutCooldown <= 0.f) canPlace = true;
                         if (selectedPlant == PlantType::SnowPea && snowpeaCooldown <= 0.f) canPlace = true;
+                        if (selectedPlant == PlantType::DoomShroom && doomCooldown <= 0.f) canPlace = true;
 
                         // jesli nie ma szadzimy
                         if (canPlace)
@@ -377,6 +394,7 @@ void Game::run()
                                 if (selectedPlant == PlantType::Sunflower) sunflowerCooldown = 2.5f;
                                 if (selectedPlant == PlantType::Wallnut) wallnutCooldown = 2.5f;
                                 if (selectedPlant == PlantType::SnowPea) snowpeaCooldown = 2.5f;
+                                if (selectedPlant == PlantType::DoomShroom) doomCooldown = 5.0f;
                             }
                         }
                     }
@@ -399,6 +417,9 @@ void Game::run()
 
                 if (event.key.code == sf::Keyboard::Num4)
                     selectedPlant = PlantType::SnowPea;
+
+                if (event.key.code == sf::Keyboard::Num5)
+                    selectedPlant = PlantType::DoomShroom;
 
                 if (world.isGameOver() || world.isGameWon())
                 {
@@ -455,6 +476,7 @@ void Game::update(float dt)
     sunflowerButton.setOutlineThickness(0);
     wallnutButton.setOutlineThickness(0);
     snowpeaButton.setOutlineThickness(0);
+    doomButton.setOutlineThickness(0);
     shovelSprite.setColor(sf::Color::White);
 
     if (isShovelSelected)
@@ -483,6 +505,11 @@ void Game::update(float dt)
         case PlantType::SnowPea:
             snowpeaButton.setOutlineThickness(3);
             snowpeaButton.setOutlineColor(sf::Color::White);
+            break;
+
+        case PlantType::DoomShroom:
+            doomButton.setOutlineThickness(3);
+            doomButton.setOutlineColor(sf::Color::White);
             break;
         }
     }
@@ -534,6 +561,7 @@ void Game::update(float dt)
     if (sunflowerCooldown > 0.f) sunflowerCooldown -= dt;
     if (wallnutCooldown > 0.f) wallnutCooldown -= dt;
     if (snowpeaCooldown > 0.f) snowpeaCooldown -= dt;
+    if (doomCooldown > 0.f) doomCooldown -= dt;
 
     // cooldown kolor na ciemniejszy
     if (peashooterCooldown > 0.f) peashooterButton.setFillColor(sf::Color(80, 120, 80));
@@ -547,6 +575,9 @@ void Game::update(float dt)
 
     if (snowpeaCooldown > 0.f) snowpeaButton.setFillColor(sf::Color(80, 100, 150));
     else snowpeaButton.setFillColor(sf::Color(100, 150, 255)); //niebieski
+
+    if (doomCooldown > 0.f) doomButton.setFillColor(sf::Color(40, 0, 40));
+    else doomButton.setFillColor(sf::Color(80, 0, 80));
 
 }
 
@@ -586,10 +617,12 @@ void Game::render()
     window.draw(sunflowerButton);
     window.draw(wallnutButton);
     window.draw(snowpeaButton);
+    window.draw(doomButton);
     window.draw(peashooterText);
     window.draw(sunflowerText);
     window.draw(wallnutText);
     window.draw(snowpeaText);
+    window.draw(doomText);
 
     // Rysowanie łopaty
     window.draw(shovelSprite);

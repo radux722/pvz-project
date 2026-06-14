@@ -19,11 +19,13 @@ private:
     sf::RectangleShape sunflowerButton;
     sf::RectangleShape wallnutButton;
     sf::RectangleShape snowpeaButton;
+    sf::RectangleShape doomButton;
 
     sf::Text peashooterText;
     sf::Text sunflowerText;
     sf::Text wallnutText;
     sf::Text snowpeaText;
+    sf::Text doomText;
 
     sf::Text waveText;
     sf::Text gameOverText;
@@ -43,6 +45,7 @@ private:
     float sunflowerCooldown;
     float wallnutCooldown;
     float snowpeaCooldown;
+    float doomCooldown;
 
     enum class GameState // menu
     {

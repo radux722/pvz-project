@@ -111,12 +111,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\projekt\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\rybar\OneDrive\Dokumenty\SFML Visual Studio\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\projekt\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\rybar\OneDrive\Dokumenty\SFML Visual Studio\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;
 sfml-window-d.lib
 ;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -147,8 +147,10 @@ sfml-window-d.lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicZombie.cpp" />
+    <ClCompile Include="BerserkerZombie.cpp" />
     <ClCompile Include="BossZombie.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="DoomShroom.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FastZombie.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -165,8 +167,10 @@ sfml-window-d.lib
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicZombie.h" />
+    <ClInclude Include="BerserkerZombie.h" />
     <ClInclude Include="BossZombie.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="DoomShroom.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FastZombie.h" />
     <ClInclude Include="Game.h" />
