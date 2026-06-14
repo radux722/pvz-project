@@ -6,7 +6,13 @@ DoomShroom::DoomShroom(float x, float y)
     health = 300;
     cost = 125;
 
-    sprite.setColor(sf::Color(80, 0, 80));
+    if (texture.loadFromFile("doomshroom.png")) {
+        sprite.setTexture(texture);
+
+        sf::FloatRect bounds = sprite.getLocalBounds();
+        sprite.setScale(85.f / bounds.width, 85.f / bounds.height);
+        sprite.setPosition(position.x + 17.5f, position.y + 35.f);
+    }
 }
 
 void DoomShroom::attack() {}

@@ -6,6 +6,9 @@ class BerserkerZombie : public Zombie
 {
 private:
 	bool isEnraged;
+
+	sf::Texture textureEnraged;
+	sf::Texture textureEnragedFrozen;
 public:
 	BerserkerZombie(float x, float y);
 

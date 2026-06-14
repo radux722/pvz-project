@@ -9,8 +9,18 @@ BerserkerZombie::BerserkerZombie(float x, float y)
     damage = 100;
     attackCooldown = 1.0f;
 
-    sprite.setColor(sf::Color(255, 140, 0));
+    textureNormal.loadFromFile("berserker_zombie.png");
+    textureFrozen.loadFromFile("berserker_zombie_frozen.png");
+    textureEnraged.loadFromFile("berserker_zombie_enrage.png");
+    textureEnragedFrozen.loadFromFile("berserker_zombie_enrage_frozen.png");
+
+    sprite.setTexture(textureNormal);
+
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setScale(100.f / bounds.width, 100.f / bounds.height);
+    sprite.setPosition(position);
 }
+
 
 void BerserkerZombie::update(float dt)
 {
@@ -24,7 +34,15 @@ void BerserkerZombie::update(float dt)
             speed = baseSpeed;
         }
 
-        sprite.setColor(sf::Color(255, 0, 0));
+        textureNormal = textureEnraged;
+        textureFrozen = textureEnragedFrozen;
+
+        if (isSlowed) {
+            sprite.setTexture(textureFrozen);
+        }
+        else {
+            sprite.setTexture(textureNormal);
+        }
     }
 
     Zombie::update(dt);
