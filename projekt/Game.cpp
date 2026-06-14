@@ -168,6 +168,17 @@ Game::Game()
     pausedText.setPosition(350.f, 300.f);
 
 
+    // wyjscie do menu
+    menuButton.setSize({ 250.f, 60.f });
+    menuButton.setPosition(415.f, 420.f);
+    menuButton.setFillColor(sf::Color(180, 80, 80));
+
+    menuButtonText.setFont(font);
+    menuButtonText.setString("MENU");
+    menuButtonText.setCharacterSize(30);
+    menuButtonText.setFillColor(sf::Color::White);
+    menuButtonText.setPosition(475.f, 432.f);
+
 
     //selectedPlant = PlantType::Peashooter;
 
@@ -226,6 +237,28 @@ void Game::run()
                 // zmiana pixeli ekranu na kordy w grze
                 sf::Vector2i pixelPos(event.mouseButton.x, event.mouseButton.y);
                 sf::Vector2f mousePos = window.mapPixelToCoords(pixelPos);
+
+                // ===== MENU PAUZY =====
+                if (paused)
+                {
+                    if (pauseButton.getGlobalBounds().contains(mousePos))
+                    {
+                        paused = false;
+                        continue;
+                    }
+
+                    if (menuButton.getGlobalBounds().contains(mousePos))
+                    {
+                        paused = false;
+                        
+                        //world = World(); do startowania od nowa
+
+                        state = GameState::MainMenu;
+                        continue;
+                    }
+                    continue;
+                }
+
 
                 // ================= MENU GŁÓWNE =================
                 if (state == GameState::MainMenu)
@@ -591,6 +624,8 @@ void Game::render()
     if (paused)
     {
         window.draw(pausedText);
+        window.draw(menuButton);
+        window.draw(menuButtonText);
     }
 
    

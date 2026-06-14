@@ -68,6 +68,9 @@ private:
 
     sf::Text statisticsText;
 
+    sf::RectangleShape menuButton;
+    sf::Text menuButtonText;
+
     World world;
 
     PlantType selectedPlant;
