@@ -48,7 +48,7 @@ Game::Game()
     snowpeaButton.setFillColor(sf::Color(100, 150, 255));
 
     doomButton.setSize(sf::Vector2f(150.f, 60.f));
-    doomButton.setPosition(980.f, 10.f);
+    doomButton.setPosition(880.f, 10.f);
     doomButton.setFillColor(sf::Color(80, 0, 80));
 
     peashooterText.setFont(font);
@@ -74,7 +74,7 @@ Game::Game()
     doomText.setFont(font);
     doomText.setCharacterSize(20);
     doomText.setString("Doom (125)");
-    doomText.setPosition(995.f, 25.f);
+    doomText.setPosition(895.f, 25.f);
 
     // fale zombie
     waveText.setFont(font);
