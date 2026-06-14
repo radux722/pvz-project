@@ -1,13 +1,15 @@
-0
-1
-0
-3
-0 2 1
-2 0 5
+225
+2
+5
+8
 1 0 0
-ZOMBIES 5
-BasicZombie 789.69 370 20
-BasicZombie 847.543 130 120
-BasicZombie 967.544 130 120
-BasicZombie 963.117 490 120
-BasicZombie 1020.68 610 120
+1 1 0
+0 3 1
+0 0 1
+1 2 0
+2 2 3
+0 2 1
+3 4 2
+ZOMBIES 2
+BasicZombie 954.43 490 80
+BasicZombie 1007.09 250 120

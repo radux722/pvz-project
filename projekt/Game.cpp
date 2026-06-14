@@ -3,7 +3,8 @@
 #include <filesystem>
 
 Game::Game()
-    : window(sf::VideoMode(1280, 720), "Plants vs Zombies")
+    : window(sf::VideoMode(1280, 720), "Plants vs Zombies"),
+    selectedPlant(PlantType::Peashooter)
 {
     window.setFramerateLimit(60);
 
@@ -237,7 +238,7 @@ void Game::run()
                 // zmiana pixeli ekranu na kordy w grze
                 sf::Vector2i pixelPos(event.mouseButton.x, event.mouseButton.y);
                 sf::Vector2f mousePos = window.mapPixelToCoords(pixelPos);
-
+                
                 // ===== MENU PAUZY =====
                 if (paused)
                 {

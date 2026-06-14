@@ -8,6 +8,8 @@
 class Game
 {
 private:
+    PlantType selectedPlant = PlantType::Peashooter;
+
     sf::RenderWindow window;
     sf::Font font;
     sf::Text killText;
@@ -73,7 +75,7 @@ private:
 
     World world;
 
-    PlantType selectedPlant;
+    //PlantType selectedPlant;
     
     bool paused;
 
