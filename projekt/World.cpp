@@ -247,18 +247,18 @@ void World::spawnZombie()
 {
     const float rows[5] =
     {
-        80.f,
-        200.f,
-        320.f,
-        440.f,
-        560.f
+        130.f,
+        250.f,
+        370.f,
+        490.f,
+        610.f
     };
 
     int randomRow = std::rand() % 5;
     int chance = std::rand() % 100;
 
     float spawnY = rows[randomRow];
-    float spawnX = 1100.f;
+    float spawnX = 1050.f;
 
     // Sprawdzenie, czy w tym rzędzie są już zombie.
     // Jeśli tak, nowe zombie pojawi się za ostatnim.
@@ -562,12 +562,27 @@ void World::saveGame(const std::string& filename)
             type = PlantType::Peashooter;
         else if (dynamic_cast<Sunflower*>(plant.get()))
             type = PlantType::Sunflower;
-        else
+        else if (dynamic_cast<Wallnut*>(plant.get()))
             type = PlantType::Wallnut;
+        else if (dynamic_cast<SnowPea*>(plant.get()))
+            type = PlantType::SnowPea;
+        else
+            continue;
 
         file << static_cast<int>(type) << " "
             << plant->getRow() << " "
             << plant->getCol() << "\n";
+    }
+
+    file << "ZOMBIES " << zombies.size() << "\n";
+
+    for (const auto& zombie : zombies)
+    {
+        file << zombie->getType() << " "
+            << zombie->getPosition().x << " "
+            << zombie->getPosition().y << " "
+            << zombie->getHealth()
+            << "\n";
     }
 
     file.close();
@@ -583,6 +598,7 @@ void World::loadGame(const std::string& filename)
     plants.clear();
     zombies.clear();
     bullets.clear();
+    zombies.clear();
 
     grid = Grid();
 
@@ -632,6 +648,53 @@ void World::loadGame(const std::string& filename)
             plants.push_back(std::move(wall));
             break;
         }
+
+        case PlantType::SnowPea:
+        {
+            auto wall = std::make_unique<SnowPea>(pos.x, pos.y);
+            wall->setGridPosition(row, col);
+            plants.push_back(std::move(wall));
+            break;
+        }
+        }
+    }
+
+    std::string label;
+    int zombieCount;
+
+    file >> label >> zombieCount;   // ZOMBIES 3
+
+    for (int i = 0; i < zombieCount; i++)
+    {
+        std::string type;
+        float x, y;
+        int hp;
+
+        file >> type >> x >> y >> hp;
+
+        std::unique_ptr<Zombie> zombie;
+
+        if (type == "BasicZombie")
+        {
+            zombie = std::make_unique<BasicZombie>(x, y);
+        }
+        else if (type == "FastZombie")
+        {
+            zombie = std::make_unique<FastZombie>(x, y);
+        }
+        else if (type == "BossZombie")
+        {
+            zombie = std::make_unique<BossZombie>(x, y);
+        }
+        else if (type == "TankZombie")
+        {
+            zombie = std::make_unique<TankZombie>(x, y);
+        }
+
+        if (zombie)
+        {
+            zombie->setHealth(hp);
+            zombies.push_back(std::move(zombie));
         }
     }
 

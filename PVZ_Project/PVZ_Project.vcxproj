@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\projekt\BasicZombie.cpp" />
+    <ClCompile Include="..\projekt\BossZombie.cpp" />
     <ClCompile Include="..\projekt\Bullet.cpp" />
     <ClCompile Include="..\projekt\Entity.cpp" />
     <ClCompile Include="..\projekt\FastZombie.cpp" />
@@ -154,13 +155,16 @@
     <ClCompile Include="..\projekt\main.cpp" />
     <ClCompile Include="..\projekt\Peashooter.cpp" />
     <ClCompile Include="..\projekt\Plant.cpp" />
+    <ClCompile Include="..\projekt\SnowPea.cpp" />
     <ClCompile Include="..\projekt\Sunflower.cpp" />
+    <ClCompile Include="..\projekt\TankZombie.cpp" />
     <ClCompile Include="..\projekt\Wallnut.cpp" />
     <ClCompile Include="..\projekt\World.cpp" />
     <ClCompile Include="..\projekt\Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\projekt\BasicZombie.h" />
+    <ClInclude Include="..\projekt\BossZombie.h" />
     <ClInclude Include="..\projekt\Bullet.h" />
     <ClInclude Include="..\projekt\Entity.h" />
     <ClInclude Include="..\projekt\FastZombie.h" />
@@ -168,10 +172,30 @@
     <ClInclude Include="..\projekt\Grid.h" />
     <ClInclude Include="..\projekt\Peashooter.h" />
     <ClInclude Include="..\projekt\Plant.h" />
+    <ClInclude Include="..\projekt\SnowPea.h" />
     <ClInclude Include="..\projekt\Sunflower.h" />
+    <ClInclude Include="..\projekt\TankZombie.h" />
     <ClInclude Include="..\projekt\Wallnut.h" />
     <ClInclude Include="..\projekt\World.h" />
     <ClInclude Include="..\projekt\Zombie.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\projekt\basic_zombie.png" />
+    <Image Include="..\projekt\basic_zombie_frozen.png" />
+    <Image Include="..\projekt\boss_zombie.png" />
+    <Image Include="..\projekt\boss_zombie_frozen.png" />
+    <Image Include="..\projekt\bullet.png" />
+    <Image Include="..\projekt\bullet_snow.png" />
+    <Image Include="..\projekt\fast_zombie.png" />
+    <Image Include="..\projekt\fast_zombie_frozen.png" />
+    <Image Include="..\projekt\ground.png" />
+    <Image Include="..\projekt\peashooter.png" />
+    <Image Include="..\projekt\snowpea.png" />
+    <Image Include="..\projekt\sun.png" />
+    <Image Include="..\projekt\sunflower.png" />
+    <Image Include="..\projekt\tank_zombie.png" />
+    <Image Include="..\projekt\tank_zombie_frozen.png" />
+    <Image Include="..\projekt\wallnut.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

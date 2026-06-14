@@ -22,74 +22,75 @@ Game::Game()
     killText.setFont(font);
     killText.setCharacterSize(28);
     killText.setFillColor(sf::Color::White);
-    killText.setPosition(20.f, 20.f);
+    killText.setPosition(20.f, 10.f);
     sunText.setFont(font);
     sunText.setCharacterSize(28);
     sunText.setFillColor(sf::Color::Yellow);
-    sunText.setPosition(20.f, 60.f);
+    sunText.setPosition(20.f, 45.f);
 
     // gui roslin
+   
     peashooterButton.setSize(sf::Vector2f(150.f, 60.f));
-    peashooterButton.setPosition(300.f, 10.f);
+    peashooterButton.setPosition(240.f, 10.f);
     peashooterButton.setFillColor(sf::Color(100, 200, 100));
 
     sunflowerButton.setSize(sf::Vector2f(150.f, 60.f));
-    sunflowerButton.setPosition(470.f, 10.f);
+    sunflowerButton.setPosition(400.f, 10.f);
     sunflowerButton.setFillColor(sf::Color(220, 220, 100));
 
     wallnutButton.setSize(sf::Vector2f(150.f, 60.f));
-    wallnutButton.setPosition(640.f, 10.f);
+    wallnutButton.setPosition(560.f, 10.f);
     wallnutButton.setFillColor(sf::Color(160, 100, 50));
 
     snowpeaButton.setSize(sf::Vector2f(150.f, 60.f));
-    snowpeaButton.setPosition(810.f, 10.f);
+    snowpeaButton.setPosition(720.f, 10.f);
     snowpeaButton.setFillColor(sf::Color(100, 150, 255));
 
     peashooterText.setFont(font);
     peashooterText.setCharacterSize(20);
     peashooterText.setString("Pea (100)");
-    peashooterText.setPosition(315.f, 25.f);
+    peashooterText.setPosition(255.f, 25.f);
 
     sunflowerText.setFont(font);
     sunflowerText.setCharacterSize(20);
     sunflowerText.setString("Sun (50)");
-    sunflowerText.setPosition(495.f, 25.f);
+    sunflowerText.setPosition(425.f, 25.f);
 
     wallnutText.setFont(font);
     wallnutText.setCharacterSize(20);
     wallnutText.setString("Wall (50)");
-    wallnutText.setPosition(665.f, 25.f);
+    wallnutText.setPosition(585.f, 25.f);
 
     snowpeaText.setFont(font);
     snowpeaText.setCharacterSize(20);
     snowpeaText.setString("Snow (175)");
-    snowpeaText.setPosition(825.f, 25.f);
+    snowpeaText.setPosition(740.f, 25.f);
 
     // fale zombie
     waveText.setFont(font);
     waveText.setCharacterSize(28);
     waveText.setFillColor(sf::Color::Red);
-    waveText.setPosition(20.f, 100.f);
+    waveText.setPosition(20.f, 80.f);
 
     // game over
     gameOverText.setFont(font);
     gameOverText.setCharacterSize(72);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setString("GAME OVER");
-    gameOverText.setPosition(350.f, 300.f);
+    gameOverText.setPosition(350.f, 220.f);
 
     // statystki
     statisticsText.setFont(font);
     statisticsText.setCharacterSize(30);
     statisticsText.setFillColor(sf::Color::White);
-    statisticsText.setPosition(350.f, 380.f);
+    statisticsText.setPosition(320.f, 320.f);
 
     // game won
     winText.setFont(font);
     winText.setCharacterSize(72);
     winText.setFillColor(sf::Color::Yellow);
     winText.setString("YOU WIN!");
-    winText.setPosition(380.f, 300.f);
+    winText.setPosition(340.f, 220.f);
 
     paused = false;
 
@@ -130,33 +131,35 @@ Game::Game()
 
     // save and load 
     saveButton.setSize({ 120.f, 50.f });
-    saveButton.setPosition(1100.f, 10.f);
+    saveButton.setPosition(1100.f, 20.f);
     saveButton.setFillColor(sf::Color(80, 80, 200));
 
     saveText.setFont(font);
     saveText.setString("SAVE");
     saveText.setCharacterSize(24);
-    saveText.setPosition(1125.f, 20.f);
+    saveText.setPosition(1120.f, 30.f);
 
     loadButtonGame.setSize({ 120.f,50.f });
-    loadButtonGame.setPosition(1100.f, 70.f);
+    loadButtonGame.setPosition(1100.f, 85.f);
     loadButtonGame.setFillColor(sf::Color(80, 160, 200));
 
     loadGameText.setFont(font);
     loadGameText.setString("LOAD");
     loadGameText.setCharacterSize(24);
-    loadGameText.setPosition(1125.f, 80.f);
+    loadGameText.setPosition(1120.f, 95.f);
 
     // pauza
     pauseButton.setSize({ 120.f, 50.f });
-    pauseButton.setPosition(1100.f, 130.f);
+    pauseButton.setPosition(1100.f, 150.f);
     pauseButton.setFillColor(sf::Color(200, 140, 60));
+    pauseText.setPosition(1125.f, 150.f);
 
     pauseText.setFont(font);
     pauseText.setString("PAUSE");
     pauseText.setCharacterSize(24);
     pauseText.setFillColor(sf::Color::White);
-    pauseText.setPosition(1110.f, 140.f);
+    pauseText.setPosition(1120.f, 160.f);
+    
     
     pausedText.setFont(font);
     pausedText.setCharacterSize(72);
@@ -173,7 +176,7 @@ Game::Game()
     shovelText.setFont(font);
     shovelText.setCharacterSize(20);
     shovelText.setString("Shovel");
-    shovelText.setPosition(1140.f, 655.f);
+    shovelText.setPosition(1130.f, 645.f);
 
     isShovelSelected = false;
 
@@ -196,7 +199,7 @@ Game::Game()
         sf::FloatRect bounds = shovelSprite.getLocalBounds();
         shovelSprite.setScale(100.f / bounds.width, 100.f / bounds.height);
 
-        shovelSprite.setPosition(1120.f, 550.f);
+        shovelSprite.setPosition(1135.f, 625.f);
     }
 
 }
@@ -309,8 +312,12 @@ void Game::run()
                     int mouseY = event.mouseButton.y;
 
                     // sadzenie na podstawie mousepos
-                    int row = (static_cast<int>(mousePos.y) - 80) / 120;
-                    int col = static_cast<int>(mousePos.x) / 120;
+                    //int row = (static_cast<int>((mousePos.y) - 110.f) / 120.f);
+                    //int col = static_cast<int>(mousePos.x) / 120.f;
+                    const float GRID_OFFSET_Y = 110.f;
+
+                    int row = static_cast<int>((mousePos.y - GRID_OFFSET_Y) / 120.f);
+                    int col = static_cast<int>(mousePos.x / 120.f);
 
                     if (isShovelSelected)
                     {
@@ -516,7 +523,7 @@ void Game::render()
     {
         window.clear(sf::Color(30, 120, 30));
         window.draw(backgroundSprite);
-        world.draw(window);
+        //world.draw(window);
         window.draw(titleText);
 
         window.draw(startButton);

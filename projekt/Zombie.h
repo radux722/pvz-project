@@ -38,4 +38,21 @@ public:
 
     int getDamage() const;
 
+    virtual std::string getType() const = 0;
+
+    sf::Vector2f getPosition() const
+    {
+        return sprite.getPosition();
+    }
+
+    int getHealth() const
+    {
+        return health;
+    }
+
+    void setHealth(int hp)
+    {
+        health = hp;
+    }
+
 };

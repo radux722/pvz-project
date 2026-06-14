@@ -54,6 +54,15 @@
     <ClCompile Include="..\projekt\Zombie.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="..\projekt\BossZombie.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\projekt\SnowPea.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\projekt\TankZombie.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\projekt\BasicZombie.h">
@@ -92,5 +101,64 @@
     <ClInclude Include="..\projekt\Zombie.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="..\projekt\BossZombie.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\SnowPea.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\TankZombie.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\projekt\basic_zombie.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\basic_zombie_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\boss_zombie.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\boss_zombie_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\bullet.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\bullet_snow.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\fast_zombie.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\fast_zombie_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\ground.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\peashooter.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\snowpea.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\sun.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\sunflower.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\tank_zombie.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\tank_zombie_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\wallnut.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
   </ItemGroup>
 </Project>

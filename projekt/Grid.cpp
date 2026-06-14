@@ -1,6 +1,8 @@
 #include "Grid.h"
 #include <iostream>
 
+const float GRID_OFFSET_Y = 130.f;
+
 Grid::Grid()
 {
     cellWidth = 120.f;
@@ -37,7 +39,8 @@ sf::Vector2f Grid::getCellPosition(int row, int col) const
 {
     return sf::Vector2f(
         col * cellWidth + 20.f,
-        row * cellHeight + 80.f
+        //row * cellHeight + 80.f
+        row * cellHeight + GRID_OFFSET_Y
     );
 }
 
@@ -53,7 +56,8 @@ void Grid::draw(sf::RenderWindow& window)
 
         line.setPosition(
             i * cellWidth,
-            80.f
+            //80.f
+            GRID_OFFSET_Y
         );
 
         window.draw(line);
@@ -65,7 +69,8 @@ void Grid::draw(sf::RenderWindow& window)
 
         line.setPosition(
             0.f,
-            80.f + i * cellHeight
+            //80.f + i * cellHeight
+            GRID_OFFSET_Y + i * cellHeight
         );
 
         window.draw(line);

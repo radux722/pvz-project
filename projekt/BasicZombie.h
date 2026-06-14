@@ -6,4 +6,9 @@ class BasicZombie : public Zombie
 {
 public:
     BasicZombie(float x, float y);
+
+    std::string getType() const override
+    {
+        return "BasicZombie";
+    }
 };
