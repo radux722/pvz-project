@@ -8,6 +8,8 @@ enum class PlantType
     Peashooter, Sunflower, Wallnut, SnowPea, DoomShroom
 };
 
+class Zombie;
+
 class Plant : public Entity
 {
 protected:
@@ -40,4 +42,6 @@ public:
 
     //odczytywanie ceny punktow dla lopaty
     int getCost() const;
+
+    virtual void onZombieContact(Zombie* zombie) {}
 };

@@ -202,6 +202,9 @@ void World::update(float dt)
             if (zombie->getBounds().intersects(plant->getBounds()))
             {
                 blocked = true;
+
+                plant->onZombieContact(zombie.get());
+
                 if (zombie->canAttack(dt)) // gryzienie co sekunde
                 {
                     //plant->takeDamage(100);
@@ -533,7 +536,7 @@ bool World::placePlant(int row, int col, PlantType type)
         break;
     
     case PlantType::DoomShroom:
-        cost = 125;
+        cost = 250;
         break;
     }
 
@@ -820,7 +823,7 @@ void World::removePlantAt(int row, int col)
     {
         if (plant->getRow() == row && plant->getCol() == col && !plant->isDead())
         {
-            sunPoints += plant->getCost() / 2;
+            sunPoints += 25;
             plant->takeDamage(9999);           
             return;
         }

@@ -5,7 +5,6 @@
 class DoomShroom : public Plant
 {
 private:
-    float fuseTimer;
     bool exploded;
 
 public:
@@ -15,4 +14,6 @@ public:
     void update(float dt) override;
 
     bool shouldExplode() const;
+    void triggerExplosion();
+    void onZombieContact(Zombie* zombie) override;
 };

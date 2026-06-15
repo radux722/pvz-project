@@ -17,7 +17,7 @@ BerserkerZombie::BerserkerZombie(float x, float y)
     sprite.setTexture(textureNormal);
 
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setScale(100.f / bounds.width, 100.f / bounds.height);
+    sprite.setScale(120.f / bounds.width, 120.f / bounds.height);
     sprite.setPosition(position);
 }
 

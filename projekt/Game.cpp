@@ -73,7 +73,7 @@ Game::Game()
 
     doomText.setFont(font);
     doomText.setCharacterSize(20);
-    doomText.setString("Doom (125)");
+    doomText.setString("Doom (250)");
     doomText.setPosition(895.f, 25.f);
 
     // fale zombie
