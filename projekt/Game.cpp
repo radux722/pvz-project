@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <filesystem>
+#include <stdexcept>
 
 Game::Game()
     : window(sf::VideoMode(1280, 720), "Plants vs Zombies"),
@@ -13,7 +14,7 @@ Game::Game()
     std::cout << std::filesystem::current_path() << std::endl;
     if (!font.loadFromFile("assets/fonts/comic.ttf")) // to trzeba zmienic !!
     {
-        std::cout << "Blad ladowania czcionki!" << std::endl;
+        throw std::runtime_error("Krytyczny blad: Nie udalo sie zaladowac czcionki comic.ttf!");
     }
     else
     {

@@ -170,6 +170,7 @@ sfml-window-d.lib
     <ClInclude Include="BerserkerZombie.h" />
     <ClInclude Include="BossZombie.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Counter.h" />
     <ClInclude Include="DoomShroom.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FastZombie.h" />
@@ -183,6 +184,7 @@ sfml-window-d.lib
     <ClInclude Include="Wallnut.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Zombie.h" />
+    <ClInclude Include="ZombieFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

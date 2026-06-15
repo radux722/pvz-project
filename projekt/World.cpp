@@ -8,6 +8,7 @@
 #include "TankZombie.h"
 #include "BossZombie.h"
 #include "BerserkerZombie.h"
+#include "ZombieFactory.h"
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -751,24 +752,8 @@ void World::loadGame(const std::string& filename)
 
         file >> type >> x >> y >> hp;
 
-        std::unique_ptr<Zombie> zombie;
-
-        if (type == "BasicZombie")
-        {
-            zombie = std::make_unique<BasicZombie>(x, y);
-        }
-        else if (type == "FastZombie")
-        {
-            zombie = std::make_unique<FastZombie>(x, y);
-        }
-        else if (type == "BossZombie")
-        {
-            zombie = std::make_unique<BossZombie>(x, y);
-        }
-        else if (type == "TankZombie")
-        {
-            zombie = std::make_unique<TankZombie>(x, y);
-        }
+        //Użycie fabryki
+        std::unique_ptr<Zombie> zombie = ZombieFactory::createZombie(type, x, y);
 
         if (zombie)
         {

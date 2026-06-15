@@ -16,6 +16,7 @@
 #include "FastZombie.h"
 
 #include "Grid.h"
+#include "Counter.h"
 
 class World
 {
@@ -27,7 +28,7 @@ private:
  
     float zombieSpawnTimer;
 
-    int zombieKills;
+    Counter<int> zombieKills;
 
 
     void checkCollisions();
@@ -35,7 +36,7 @@ private:
 
     Grid grid;
 
-    int sunPoints = 50;
+    Counter<int> sunPoints = 50;
 
     bool gameOver;
     bool gameWon;
