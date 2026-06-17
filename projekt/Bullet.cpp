@@ -11,12 +11,9 @@ Bullet::Bullet(float x, float y, bool freezing):isFreezing(freezing)
 		texture.loadFromFile("bullet.png");
 	}
 	sprite.setTexture(texture);
-
 	sf::FloatRect bounds = sprite.getLocalBounds();
-	sprite.setScale(25.f / bounds.width, 25.f / bounds.height);
-
+	sprite.setScale(25.f / bounds.width, 25.f / bounds.height); //skalowanie pocisku
 	sprite.setPosition(x, y);
-
 	speed = 400.f;
 	damage = 20;
 }
