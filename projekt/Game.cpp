@@ -9,8 +9,7 @@ Game::Game()
 {
     window.setFramerateLimit(60);
 
-    // licznik smierci
-    //font.loadFromFile("arial.ttf");
+   
     std::cout << std::filesystem::current_path() << std::endl;
     if (!font.loadFromFile("assets/fonts/comic.ttf")) // to trzeba zmienic !!
     {
@@ -21,6 +20,7 @@ Game::Game()
         std::cout << "Czcionka zaladowana" << std::endl;
     }
 
+    // licznik smierci i sun
     killText.setFont(font);
     killText.setCharacterSize(28);
     killText.setFillColor(sf::Color::White);
@@ -31,7 +31,6 @@ Game::Game()
     sunText.setPosition(20.f, 45.f);
 
     // gui roslin
-   
     peashooterButton.setSize(sf::Vector2f(150.f, 60.f));
     peashooterButton.setPosition(240.f, 10.f);
     peashooterButton.setFillColor(sf::Color(100, 200, 100));
@@ -171,7 +170,6 @@ Game::Game()
     pauseText.setFillColor(sf::Color::White);
     pauseText.setPosition(1120.f, 160.f);
     
-    
     pausedText.setFont(font);
     pausedText.setCharacterSize(72);
     pausedText.setFillColor(sf::Color::White);
@@ -183,17 +181,11 @@ Game::Game()
     menuButton.setSize({ 250.f, 60.f });
     menuButton.setPosition(415.f, 420.f);
     menuButton.setFillColor(sf::Color(180, 80, 80));
-
     menuButtonText.setFont(font);
     menuButtonText.setString("MENU");
     menuButtonText.setCharacterSize(30);
     menuButtonText.setFillColor(sf::Color::White);
     menuButtonText.setPosition(475.f, 432.f);
-
-
-    //selectedPlant = PlantType::Peashooter;
-
-
 
     shovelText.setFont(font);
     shovelText.setCharacterSize(20);
@@ -250,7 +242,7 @@ void Game::run()
                 sf::Vector2i pixelPos(event.mouseButton.x, event.mouseButton.y);
                 sf::Vector2f mousePos = window.mapPixelToCoords(pixelPos);
                 
-                // ===== MENU PAUZY =====
+                // menu pauzy
                 if (paused)
                 {
                     if (pauseButton.getGlobalBounds().contains(mousePos))
@@ -263,7 +255,7 @@ void Game::run()
                     {
                         paused = false;
                         
-                        //world = World(); do startowania od nowa
+                        world = World(); //do startowania od nowa
 
                         state = GameState::MainMenu;
                         continue;
@@ -272,7 +264,7 @@ void Game::run()
                 }
 
 
-                // ================= MENU GŁÓWNE =================
+                // menu glowne
                 if (state == GameState::MainMenu)
                 {
                     if (startButton.getGlobalBounds().contains(mousePos))
@@ -294,7 +286,7 @@ void Game::run()
                     continue;
                 }
 
-                // ================= SAVE / LOAD W TRAKCIE GRY / PAUZA =================
+                // save load pauza
                 if (saveButton.getGlobalBounds().contains(mousePos))
                 {
                     world.saveGame("save.txt");
@@ -315,7 +307,7 @@ void Game::run()
                     continue;
                 }
 
-                // ================= GUI ROŚLIN =================
+                // gui roslin
                 if (shovelSprite.getGlobalBounds().contains(mousePos))
                 {
                     isShovelSelected = true;
@@ -356,15 +348,11 @@ void Game::run()
                     continue;
                 }
 
-                // ================= SADZENIE ROŚLIN / KOPANIE =================
+                // sadzenie i kopanie
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
                     int mouseX = event.mouseButton.x;
                     int mouseY = event.mouseButton.y;
-
-                    // sadzenie na podstawie mousepos
-                    //int row = (static_cast<int>((mousePos.y) - 110.f) / 120.f);
-                    //int col = static_cast<int>(mousePos.x) / 120.f;
                     const float GRID_OFFSET_Y = 110.f;
 
                     int row = static_cast<int>((mousePos.y - GRID_OFFSET_Y) / 120.f);
@@ -373,7 +361,7 @@ void Game::run()
                     if (isShovelSelected)
                     {
                         world.removePlantAt(row, col);
-                        isShovelSelected = false; // Po wykopaniu odznacz lopate
+                        isShovelSelected = false;
                     }
                     else
                     {
@@ -550,8 +538,6 @@ void Game::update(float dt)
             "\n\nPress ENTER to return to menu"
         );
     }
-
-    //world.update(dt);
     waveText.setString(
         "Wave: " +
         std::to_string(world.getCurrentWave())
@@ -566,16 +552,16 @@ void Game::update(float dt)
 
     // cooldown kolor na ciemniejszy
     if (peashooterCooldown > 0.f) peashooterButton.setFillColor(sf::Color(80, 120, 80));
-    else peashooterButton.setFillColor(sf::Color(100, 200, 100)); //zielony
+    else peashooterButton.setFillColor(sf::Color(100, 200, 100)); 
 
     if (sunflowerCooldown > 0.f) sunflowerButton.setFillColor(sf::Color(140, 140, 80));
-    else sunflowerButton.setFillColor(sf::Color(220, 220, 100)); //zolty
+    else sunflowerButton.setFillColor(sf::Color(220, 220, 100)); 
 
     if (wallnutCooldown > 0.f) wallnutButton.setFillColor(sf::Color(110, 80, 50));
-    else wallnutButton.setFillColor(sf::Color(160, 100, 50)); //brazowy
+    else wallnutButton.setFillColor(sf::Color(160, 100, 50)); 
 
     if (snowpeaCooldown > 0.f) snowpeaButton.setFillColor(sf::Color(80, 100, 150));
-    else snowpeaButton.setFillColor(sf::Color(100, 150, 255)); //niebieski
+    else snowpeaButton.setFillColor(sf::Color(100, 150, 255)); 
 
     if (doomCooldown > 0.f) doomButton.setFillColor(sf::Color(40, 0, 40));
     else doomButton.setFillColor(sf::Color(80, 0, 80));
@@ -636,13 +622,10 @@ void Game::render()
     window.draw(loadButtonGame);
     window.draw(loadGameText);
 
-
-
     // pauza
     window.draw(pauseButton);
     window.draw(pauseText);
-    
-    
+
 
     if (world.isGameOver())
     {
@@ -662,10 +645,6 @@ void Game::render()
         window.draw(menuButton);
         window.draw(menuButtonText);
     }
-
-   
-
     window.display();
 
-  
 }

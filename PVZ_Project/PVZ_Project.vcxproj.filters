@@ -63,6 +63,12 @@
     <ClCompile Include="..\projekt\TankZombie.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="..\projekt\BerserkerZombie.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\projekt\DoomShroom.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\projekt\BasicZombie.h">
@@ -108,6 +114,18 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="..\projekt\TankZombie.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\BerserkerZombie.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\DoomShroom.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\Counter.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projekt\ZombieFactory.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,6 +176,21 @@
       <Filter>Pliki zasobów</Filter>
     </Image>
     <Image Include="..\projekt\wallnut.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\berserker_zombie.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\berserker_zombie_enrage.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\berserker_zombie_enrage_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\berserker_zombie_frozen.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\projekt\DoomShroom.png">
       <Filter>Pliki zasobów</Filter>
     </Image>
   </ItemGroup>

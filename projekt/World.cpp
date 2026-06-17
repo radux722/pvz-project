@@ -16,10 +16,8 @@
 #include <iostream>
 #include <fstream>
 
-
-World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
+World::World()
 {
-    //bulletTimer = 0.f;
     zombieSpawnTimer = 0.f;
     zombieKills = 0;
     sunPoints = 200;
@@ -29,11 +27,12 @@ World::World() //: bulletTimer(0.f), zombieSpawnTimer(0.f)
     totalSunCollected = 0;
     playTime = 0.f;
 
+    // testowe kładzenie
+
     /*plants.push_back(
         std::make_unique<Peashooter>(200.f, 300.f)
-    );
-    */
-
+    );*/
+    
     /*zombies.push_back(
         std::make_unique<BasicZombie>(1100.f, 300.f)
     );*/
@@ -58,9 +57,7 @@ void World::update(float dt)
     if (zombiesToSpawn > 0 && spawnTimer >= currentSpawnInterval)
     {
         spawnZombie();
-
         zombiesToSpawn--;
-
         spawnTimer = 0.f;
     }
 
@@ -68,7 +65,7 @@ void World::update(float dt)
     {
         currentWave++;
 
-        if (currentWave > 10) // po 10 falach win
+        if (currentWave > 10)
         {
             gameWon = true;
         }
@@ -77,11 +74,8 @@ void World::update(float dt)
             zombiesToSpawn = 4 + (currentWave * 2) + (currentWave * currentWave / 3);
         }
     }
-
-    
     zombieSpawnTimer += dt;
     
-
     for (auto& plant : plants)
     {
         plant->update(dt);
@@ -101,10 +95,7 @@ void World::update(float dt)
         for (auto& zombie : zombies)
         {
 
-            if (std::abs(
-                zombie->getBounds().top -
-                peashooter->getBounds().top
-            ) < 100.f)
+            if (std::abs(zombie->getBounds().top - peashooter->getBounds().top) < 100.f)
             {
                 zombieInRow = true;
                 break;
@@ -114,25 +105,23 @@ void World::update(float dt)
         // strzelanie tylko gdy zombie w row
         if (zombieInRow && peashooter->canShoot())
         {
-            //std::cout << "SHOT\n"; // do testu
-
             sf::FloatRect bounds = peashooter->getBounds();
                 
             bullets.push_back(
                 std::make_unique<Bullet>(
                     bounds.left + bounds.width,
                     bounds.top + bounds.height / 2.f
-
                 )
             );
             peashooter->resetShootTimer();
         }
     }
 
-    for (auto& plant : plants)
+    for (auto& plant : plants) // to samo dla SnowPea
     {
         SnowPea* snowpea = dynamic_cast<SnowPea*>(plant.get());
-        if (!snowpea) continue;
+        if (!snowpea) 
+            continue;
 
         bool zombieInRow = false;
         for (auto& zombie : zombies)
@@ -163,7 +152,7 @@ void World::update(float dt)
 
         if (sunflower && sunflower->canProduceSun())
         {
-            sunPoints += 25; //addSunPoints(25)
+            sunPoints += 25; 
             totalSunCollected += 25;
         }
     }
@@ -206,9 +195,8 @@ void World::update(float dt)
 
                 plant->onZombieContact(zombie.get());
 
-                if (zombie->canAttack(dt)) // gryzienie co sekunde
+                if (zombie->canAttack(dt))
                 {
-                    //plant->takeDamage(100);
                     plant->takeDamage(zombie->getDamage());
                 }
                 break;
@@ -229,7 +217,6 @@ void World::update(float dt)
     {
         bullet->update(dt);
     }
-
 
     checkCollisions();
 
@@ -293,8 +280,7 @@ void World::spawnZombie()
     float spawnY = rows[randomRow];
     float spawnX = 1050.f;
 
-    // Sprawdzenie, czy w tym rzędzie są już zombie.
-    // Jeśli tak, nowe zombie pojawi się za ostatnim.
+    // sprawdzenie czy w tym rzędzie są już zombie a jesli tak nowe zombie pojawi się za ostatnim
     for (auto& zombie : zombies)
     {
         if (std::abs(zombie->getBounds().top - spawnY) < 50.f)
@@ -306,7 +292,7 @@ void World::spawnZombie()
         }
     }
 
-    // Wybór typu zombie zależnie od fali
+    // wybór typu zombie zależnie od fali
     if (currentWave <= 2)
     {
         zombies.push_back(
@@ -513,11 +499,10 @@ int World::getZombieKills() const
     return zombieKills;
 }
 
-
 bool World::placePlant(int row, int col, PlantType type)
 {
+    // sprawdzanie kosztow
     int cost = 0;
-
     switch (type)
     {
     case PlantType::Peashooter:
@@ -541,20 +526,21 @@ bool World::placePlant(int row, int col, PlantType type)
         break;
     }
 
-    // Za mało słońca
     if (sunPoints < cost)
     {
         return false;
     }
 
-    // Pole zajęte
+    // sprawdzanie pole zajete
     if (!grid.placePlant(row, col))
     {
         return false;
     }
 
+    // pobranie pozycji
     sf::Vector2f pos = grid.getCellPosition(row, col);
 
+    // tworzenie obiektu
     switch (type)
     {
     case PlantType::Peashooter:
@@ -622,7 +608,6 @@ void World::saveGame(const std::string& filename)
     file << sunPoints << "\n";
     file << currentWave << "\n";
     file << zombieKills << "\n";
-
     file << plants.size() << "\n";
 
     for (auto& plant : plants)

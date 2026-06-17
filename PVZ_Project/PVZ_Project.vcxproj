@@ -146,8 +146,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\projekt\BasicZombie.cpp" />
+    <ClCompile Include="..\projekt\BerserkerZombie.cpp" />
     <ClCompile Include="..\projekt\BossZombie.cpp" />
     <ClCompile Include="..\projekt\Bullet.cpp" />
+    <ClCompile Include="..\projekt\DoomShroom.cpp" />
     <ClCompile Include="..\projekt\Entity.cpp" />
     <ClCompile Include="..\projekt\FastZombie.cpp" />
     <ClCompile Include="..\projekt\Game.cpp" />
@@ -164,8 +166,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\projekt\BasicZombie.h" />
+    <ClInclude Include="..\projekt\BerserkerZombie.h" />
     <ClInclude Include="..\projekt\BossZombie.h" />
     <ClInclude Include="..\projekt\Bullet.h" />
+    <ClInclude Include="..\projekt\Counter.h" />
+    <ClInclude Include="..\projekt\DoomShroom.h" />
     <ClInclude Include="..\projekt\Entity.h" />
     <ClInclude Include="..\projekt\FastZombie.h" />
     <ClInclude Include="..\projekt\Game.h" />
@@ -178,14 +183,20 @@
     <ClInclude Include="..\projekt\Wallnut.h" />
     <ClInclude Include="..\projekt\World.h" />
     <ClInclude Include="..\projekt\Zombie.h" />
+    <ClInclude Include="..\projekt\ZombieFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\projekt\basic_zombie.png" />
     <Image Include="..\projekt\basic_zombie_frozen.png" />
+    <Image Include="..\projekt\berserker_zombie.png" />
+    <Image Include="..\projekt\berserker_zombie_enrage.png" />
+    <Image Include="..\projekt\berserker_zombie_enrage_frozen.png" />
+    <Image Include="..\projekt\berserker_zombie_frozen.png" />
     <Image Include="..\projekt\boss_zombie.png" />
     <Image Include="..\projekt\boss_zombie_frozen.png" />
     <Image Include="..\projekt\bullet.png" />
     <Image Include="..\projekt\bullet_snow.png" />
+    <Image Include="..\projekt\DoomShroom.png" />
     <Image Include="..\projekt\fast_zombie.png" />
     <Image Include="..\projekt\fast_zombie_frozen.png" />
     <Image Include="..\projekt\ground.png" />
