@@ -17,7 +17,7 @@ TankZombie::TankZombie(float x, float y) :Zombie(x, y)
 	sf::FloatRect bounds = sprite.getLocalBounds();
 
 	// zmienia obrazek 85x85
-	sprite.setScale(125.f / bounds.width, 125.f / bounds.height);
+	sprite.setScale(100.f / bounds.width, 100.f / bounds.height);
 
 	sprite.setPosition(position);
 }

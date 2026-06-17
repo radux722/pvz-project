@@ -27,8 +27,7 @@ sf::FloatRect Plant::getBounds() const
 void Plant::takeDamage(int damage)
 {
     health -= damage;
-
-    std::cout << "HP: " << health << std::endl;
+    //std::cout << "HP: " << health << std::endl;
 }
 
 bool Plant::isDead() const

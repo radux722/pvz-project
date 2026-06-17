@@ -17,7 +17,7 @@ BossZombie::BossZombie(float x, float y) :Zombie(x, y)
 	sf::FloatRect bounds = sprite.getLocalBounds();
 
 
-	sprite.setScale(150.f / bounds.width, 150.f / bounds.height);
+	sprite.setScale(120.f / bounds.width, 120.f / bounds.height);
 
 	sprite.setPosition(position);
 }
